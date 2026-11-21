@@ -19,7 +19,7 @@ export function renderNavigation(currentRoute = 'warga') {
         </a>
 
         <!-- 5 Roles Apple Health Segmented Nav Tabs -->
-        <nav class="hide-mobile">
+        <nav class="role-nav-scroll-wrapper">
           <div style="display: flex; background: rgba(0, 0, 0, 0.05); padding: 3px; border-radius: 12px; gap: 2px;">
             <a href="#warga" class="nav-role-tab ${currentRoute === 'warga' ? 'active' : ''}" data-route="warga">
               👨‍🌾 Warga

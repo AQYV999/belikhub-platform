@@ -72,8 +72,8 @@
   /* SF Pro Display & Regola Optical Typography System */
   --font-regola: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   
-  --header-height: 64px;
-  --demo-bar-height: 44px;
+  --header-height: 56px;
+  --demo-bar-height: 42px;
   
   /* Apple Geometry & Inset Radii */
   --radius-xs: 6px;
@@ -363,8 +363,8 @@ p {
   top: 0;
   left: 0;
   right: 0;
-  height: var(--demo-bar-height);
-  background: rgba(15, 23, 42, 0.92);
+  min-height: var(--demo-bar-height);
+  background: rgba(15, 23, 42, 0.94);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   color: #FFFFFF;
@@ -372,15 +372,27 @@ p {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1.25rem;
+  padding: 0.35rem 1rem;
   font-size: 0.8125rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.demo-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.demo-bar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .demo-bar-left {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
+  flex-shrink: 0;
 }
 
 .demo-badge {
@@ -392,6 +404,7 @@ p {
   font-size: 0.6875rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .demo-roles {
@@ -399,15 +412,27 @@ p {
   align-items: center;
   gap: 0.35rem;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.demo-roles::-webkit-scrollbar {
+  display: none;
+}
+
+.demo-roles {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .role-btn {
-  padding: 0.3rem 0.8rem;
+  padding: 0.3rem 0.75rem;
   border-radius: var(--radius-full);
   color: rgba(255, 255, 255, 0.75);
   font-size: 0.75rem;
   font-weight: 500;
   background: rgba(255, 255, 255, 0.08);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .role-btn:hover {
@@ -425,19 +450,23 @@ p {
 .demo-bar-right {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
 }
 
 .reset-btn {
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.75);
   font-size: 0.75rem;
   padding: 0.25rem 0.6rem;
   border-radius: var(--radius-xs);
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .reset-btn:hover {
   color: #FFFFFF;
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.16);
 }
 
 /* Apple Navigation Bar (Glass Surface with Translucency) */
@@ -855,6 +884,21 @@ p {
 }
 
 /* Nav Role Tabs (iOS Health Segmented Control) */
+.role-nav-scroll-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+.role-nav-scroll-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.role-nav-scroll-wrapper {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .nav-role-tab {
   padding: 0.4rem 0.9rem;
   border-radius: 9px;
@@ -866,6 +910,8 @@ p {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .nav-role-tab:hover {
@@ -878,4 +924,52 @@ p {
   font-weight: 600;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
 }
+
+/* Mobile & Small Screens Optimization (Phones & WASM Ready) */
+@media (max-width: 640px) {
+  :root {
+    --header-height: 52px;
+    --demo-bar-height: 38px;
+  }
+
+  body {
+    padding-bottom: 2rem;
+  }
+
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .role-view {
+    padding-top: 1rem !important;
+    padding-bottom: 2.5rem !important;
+  }
+
+  .apple-stat-big {
+    font-size: 2.25rem;
+  }
+
+  .apple-inset-group {
+    border-radius: 14px;
+    margin-bottom: 1rem;
+  }
+
+  .apple-cell {
+    padding: 0.875rem 1rem;
+  }
+
+  .main-header {
+    padding: 0.5rem 0.75rem !important;
+  }
+
+  .nav-container {
+    gap: 0.5rem;
+  }
+
+  .nav-logo span:last-child {
+    display: none;
+  }
+}
+
 
