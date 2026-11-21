@@ -4,166 +4,179 @@ export function renderDonaturView() {
   const state = getStore();
 
   return `
-    <div class="role-view donatur-view container" style="padding-top: 2rem; padding-bottom: 4rem;">
-      <!-- Header Banner Role -->
-      <div style="background: linear-gradient(135deg, rgba(55,80,51,0.08) 0%, rgba(253,253,247,0.6) 100%); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 2rem 2.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
-        <div>
-          <span class="eyebrow" style="color: var(--color-evergreen);">Portal Donatur & Mitra CSR • Restorasi Ekosistem Air</span>
-          <h1 style="font-size: clamp(1.75rem, 3vw, 2.5rem); margin-top: 0.25rem; margin-bottom: 0.5rem;">Katalog Kampanye & Transparansi Dampak Hijau</h1>
-          <p class="text-muted" style="font-size: 1rem;">
-            Dukung Reboisasi Sabuk Hijau & Pembangunan Penangkap Air di Lereng Gunung Dieng Utara
-          </p>
+    <div class="role-view donatur-view container" style="padding-top: 1.5rem; padding-bottom: 4rem; max-width: 960px;">
+      
+      <!-- Apple Health Top Header -->
+      <div style="margin-bottom: 2rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+          <span class="pulsing-dot emerald"></span>
+          <span style="font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-emerald);">
+            Mitra Konservasi & CSR • Lereng Dieng Utara
+          </span>
         </div>
-        <div style="display: flex; gap: 1rem; align-items: center;">
-          <div style="background: #FFFFFF; padding: 0.875rem 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--color-border); box-shadow: var(--shadow-subtle);">
-            <span style="font-size: 0.75rem; color: var(--color-muted); text-transform: uppercase; font-weight: 600; display: block;">Transparansi Penyaluran</span>
-            <span style="font-weight: 700; color: var(--color-evergreen); font-size: 1rem;">100% Berbasis Bukti Foto</span>
-          </div>
-        </div>
+        <h1 style="font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 800; letter-spacing: -0.03em; margin: 0; color: var(--apple-text-primary);">
+          Restorasi Ekosistem Air
+        </h1>
+        <p style="font-size: 0.9375rem; color: var(--apple-text-secondary); margin-top: 0.25rem;">
+          Dukung Reboisasi Sabuk Hijau & Pembangunan Penangkap Air dengan Transparansi 100%
+        </p>
       </div>
 
-      <!-- Campaign Explorer -->
-      <div style="margin-bottom: 3rem;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
-          <div>
-            <span class="eyebrow">Program Restorasi Terbuka</span>
-            <h2 style="font-size: 1.5rem;">Katalog Kampanye Konservasi</h2>
-          </div>
-          <span style="font-size: 0.8125rem; color: var(--color-muted);">Mitra Kolaborasi: PDAM Batang & Desa Bismo/Wonomerto</span>
-        </div>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 2rem;">
-          ${state.campaigns.map(c => `
-            <div style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; display: flex; flex-direction: column; box-shadow: var(--shadow-subtle);">
-              <img src="${c.id === 'camp_001' ? '/assets/images/community.webp' : '/assets/images/home-multifamily.webp'}" alt="${c.title}" style="width: 100%; aspect-ratio: 16/9; object-fit: cover;" loading="lazy">
-              <div style="padding: 2rem; display: flex; flex-direction: column; flex: 1;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-                  <span class="project-badge">Status: ${c.status === 'active' ? 'Aktif' : 'Tercapai'}</span>
-                  <span style="font-size: 0.75rem; color: var(--color-muted); font-weight: 600;">⏳ Sisa ${c.daysLeft} Hari</span>
+      <!-- Campaign Inset Cards (Apple Health Target Style) -->
+      <div class="apple-section-header">Katalog Kampanye Terbuka</div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
+        ${state.campaigns.map(c => `
+          <div class="apple-inset-group" style="overflow: hidden; margin-bottom: 0;">
+            <img src="${c.id === 'camp_001' ? '/assets/images/community.webp' : '/assets/images/home-multifamily.webp'}" alt="${c.title}" style="width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block;" loading="lazy">
+            <div style="padding: 1.5rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <div style="display: flex; align-items: center; gap: 0.4rem;">
+                  <span class="pulsing-dot emerald"></span>
+                  <span style="font-size: 0.75rem; font-weight: 600; text-transform: uppercase; color: var(--apple-emerald);">
+                    ${c.status === 'active' ? 'Aktif Berjalan' : 'Tercapai'}
+                  </span>
                 </div>
-                <h3 style="font-size: 1.25rem; font-weight: 700; line-height: 1.35; margin-bottom: 0.5rem;">${c.title}</h3>
-                <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 1.5rem; line-height: 1.55;">${c.description}</p>
+                <span style="font-size: 0.75rem; color: var(--apple-text-secondary); font-variant-numeric: tabular-nums;">
+                  Sisa ${c.daysLeft} Hari
+                </span>
+              </div>
 
-                <!-- Progress Bar -->
-                <div style="margin-top: auto; padding-top: 1.25rem; border-top: 1px solid var(--color-border);">
-                  <div style="display: flex; justify-content: space-between; font-size: 0.875rem; margin-bottom: 0.5rem;">
-                    <strong>Rp ${(c.collectedAmount).toLocaleString('id-ID')}</strong>
-                    <span style="color: var(--color-muted);">Target: Rp ${(c.targetAmount).toLocaleString('id-ID')}</span>
+              <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--apple-text-primary); margin: 0 0 0.5rem 0; line-height: 1.35;">
+                ${c.title}
+              </h3>
+              <p style="font-size: 0.8125rem; color: var(--apple-text-secondary); line-height: 1.45; margin: 0 0 1.25rem 0;">
+                ${c.description}
+              </p>
+
+              <!-- Smooth Progress Bar -->
+              <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--apple-hairline);">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.5rem;">
+                  <div class="apple-stat-big" style="font-size: 1.35rem;">
+                    Rp ${(c.collectedAmount).toLocaleString('id-ID')}
                   </div>
-                  <div style="width: 100%; height: 10px; background: var(--color-beige); border-radius: var(--radius-full); overflow: hidden;">
-                    <div style="width: ${c.progressPercent}%; height: 100%; background: var(--color-evergreen); border-radius: var(--radius-full);"></div>
-                  </div>
-                  <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--color-muted); margin-top: 0.5rem;">
-                    <span>${c.progressPercent}% Tercapai</span>
-                    <span>Terverifikasi BUMDes Tirta</span>
-                  </div>
+                  <span style="font-size: 0.75rem; color: var(--apple-text-secondary); font-variant-numeric: tabular-nums;">
+                    Target Rp ${(c.targetAmount).toLocaleString('id-ID')}
+                  </span>
+                </div>
+
+                <div style="width: 100%; height: 8px; background: rgba(0,0,0,0.06); border-radius: 9999px; overflow: hidden;">
+                  <div style="width: ${c.progressPercent}%; height: 100%; background: var(--apple-emerald); border-radius: 9999px; transition: width 0.5s ease;"></div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--apple-text-tertiary); margin-top: 0.5rem;">
+                  <span style="font-weight: 600; color: var(--apple-emerald); font-variant-numeric: tabular-nums;">${c.progressPercent}% Tercapai</span>
+                  <span>Verifikasi BUMDes Tirta</span>
                 </div>
               </div>
             </div>
-          `).join('')}
-        </div>
+          </div>
+        `).join('')}
       </div>
 
-      <!-- Two Column: Donation Form & Impact Timeline -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 2rem;">
+      <!-- Two Column: Checkout & Timeline -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 1.5rem;">
         
-        <!-- Form Donasi & Checkout -->
-        <div style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow-subtle);">
-          <span class="eyebrow">Checkout Donasi Langsung</span>
-          <h2 style="font-size: 1.375rem; margin-bottom: 0.5rem;">Formulir Donasi Konservasi</h2>
-          <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 1.5rem;">
-            Dukungan dana Anda langsung dibelanjakan untuk bibit pohon beringin, rumput vetiver, dan perbaikan penahan longsor.
-          </p>
-
-          <form id="form-donate" onsubmit="event.preventDefault();">
-            <div class="form-group">
-              <label for="donate-campaign" class="form-label">Pilih Program Restorasi</label>
-              <select id="donate-campaign" class="form-select">
-                ${state.campaigns.map(c => `
-                  <option value="${c.id}">${c.title}</option>
-                `).join('')}
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Tipe Donatur</label>
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
-                <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-size: 0.8125rem; cursor: pointer; background: var(--color-beige);">
-                  <input type="radio" name="donor-type" value="individu" checked> Individu / Pribadi
-                </label>
-                <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm); font-size: 0.8125rem; cursor: pointer; background: var(--color-beige);">
-                  <input type="radio" name="donor-type" value="csr"> CSR Perusahaan
-                </label>
+        <!-- Form Donasi Apple-style -->
+        <div>
+          <div class="apple-section-header">Donasi Konservasi</div>
+          <div class="apple-inset-group">
+            <form id="form-donate" onsubmit="event.preventDefault();" style="padding: 1.25rem 1.5rem;">
+              <div style="font-size: 0.875rem; color: var(--apple-text-secondary); margin-bottom: 1.25rem; line-height: 1.45;">
+                Dukungan Anda dialokasikan langsung untuk bibit beringin, rumput vetiver, dan perbaikan penahan tebing air.
               </div>
-            </div>
 
-            <div class="form-group">
-              <label for="donate-name" class="form-label">Nama Lengkap Donatur / Nama Instansi</label>
-              <input type="text" id="donate-name" class="form-input" placeholder="Contoh: PT Batang Hijau Lestari" required>
-            </div>
-
-            <div class="form-group">
-              <label class="form-label">Pilih Nominal Donasi Instan</label>
-              <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-bottom: 0.75rem;">
-                <button type="button" class="btn btn-secondary btn-nominal" data-amount="25000" style="font-size: 0.8125rem; padding: 0.6rem;">Rp 25.000</button>
-                <button type="button" class="btn btn-secondary btn-nominal" data-amount="50000" style="font-size: 0.8125rem; padding: 0.6rem;">Rp 50.000</button>
-                <button type="button" class="btn btn-secondary btn-nominal" data-amount="100000" style="font-size: 0.8125rem; padding: 0.6rem;">Rp 100.000</button>
-                <button type="button" class="btn btn-secondary btn-nominal" data-amount="500000" style="font-size: 0.8125rem; padding: 0.6rem;">Rp 500.000</button>
+              <div class="form-group" style="margin-bottom: 1rem;">
+                <label for="donate-campaign" class="form-label" style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+                  Program Restorasi
+                </label>
+                <select id="donate-campaign" class="form-select" style="font-size: 0.9375rem; border-radius: 10px;">
+                  ${state.campaigns.map(c => `
+                    <option value="${c.id}">${c.title}</option>
+                  `).join('')}
+                </select>
               </div>
-              <input type="number" id="donate-custom-amount" class="form-input" placeholder="Atau nominal bebas (minimal Rp 10.000)" min="10000" step="5000" required value="100000">
-            </div>
 
-            <div class="form-group">
-              <label for="donate-payment-method" class="form-label">Metode Pembayaran</label>
-              <select id="donate-payment-method" class="form-select">
-                <option value="QRIS">QRIS Dinamis (Verifikasi Cepat)</option>
-                <option value="Transfer">Transfer Rekening Khusus Konservasi PDAM Batang</option>
-              </select>
-            </div>
+              <div class="form-group" style="margin-bottom: 1rem;">
+                <label class="form-label" style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+                  Tipe Donatur
+                </label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                  <label style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.65rem; border: 1px solid var(--apple-hairline); border-radius: 10px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; background: #FFFFFF;">
+                    <input type="radio" name="donor-type" value="individu" checked> Individu
+                  </label>
+                  <label style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.65rem; border: 1px solid var(--apple-hairline); border-radius: 10px; font-size: 0.8125rem; font-weight: 500; cursor: pointer; background: #FFFFFF;">
+                    <input type="radio" name="donor-type" value="csr"> CSR Korporasi
+                  </label>
+                </div>
+              </div>
 
-            <button type="submit" id="btn-submit-donation" class="btn btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.875rem;">
-              💚 Salurkan Donasi & Terbitkan Sertifikat
-            </button>
-          </form>
+              <div class="form-group" style="margin-bottom: 1rem;">
+                <label for="donor-name" class="form-label" style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+                  Nama Lengkap / Perusahaan
+                </label>
+                <input type="text" id="donor-name" class="form-input" placeholder="Nama Donatur atau Entitas CSR" style="border-radius: 10px;" required>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 1rem;">
+                <label class="form-label" style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+                  Nominal Donasi
+                </label>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 0.5rem;">
+                  <button type="button" class="apple-button-secondary btn-quick-amount" data-amount="50000" style="font-size: 0.8125rem; padding: 0.5rem;">Rp 50 rb</button>
+                  <button type="button" class="apple-button-secondary btn-quick-amount" data-amount="250000" style="font-size: 0.8125rem; padding: 0.5rem;">Rp 250 rb</button>
+                  <button type="button" class="apple-button-secondary btn-quick-amount" data-amount="1000000" style="font-size: 0.8125rem; padding: 0.5rem;">Rp 1 Juta</button>
+                </div>
+                <input type="number" id="donor-amount" class="form-input" value="100000" min="10000" style="border-radius: 10px; font-variant-numeric: tabular-nums;" required>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 1.25rem;">
+                <label class="form-label" style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+                  Kanal Pembayaran
+                </label>
+                <select id="donor-payment-channel" class="form-select" style="font-size: 0.875rem; border-radius: 10px;">
+                  <option value="qris">QRIS Instan (GoPay, OVO, BCA, Livin)</option>
+                  <option value="transfer">Transfer Rekening Mandiri BUMDes Tirta</option>
+                </select>
+              </div>
+
+              <button type="submit" id="btn-submit-donation" class="apple-button-primary" style="width: 100%;">
+                Bayar & Dapatkan Sertifikat
+              </button>
+            </form>
+          </div>
         </div>
 
-        <!-- Impact Timeline & Sertifikat Kontribusi Hijau -->
+        <!-- Impact Timeline & Green Certificate -->
         <div>
-          <div style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 2rem; box-shadow: var(--shadow-subtle);">
-            <span class="eyebrow" style="color: var(--color-evergreen);">Transparansi Garis Waktu Dampak</span>
-            <h2 style="font-size: 1.375rem; margin-bottom: 0.5rem;">Impact Timeline Transparan</h2>
-            <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 1.5rem;">
-              Laporan berkala foto fisik pohon yang ditanam dan perbaikan struktur bak penangkap air.
-            </p>
-
-            <div style="display: flex; flex-direction: column; gap: 1rem;">
-              ${state.campaigns[0].timelineUpdates.map(t => `
-                <div style="display: flex; gap: 1rem; background: var(--color-beige); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--color-border);">
-                  <div style="min-width: 80px; text-align: center; border-right: 1px solid var(--color-border); padding-right: 0.75rem;">
-                    <span style="font-size: 0.75rem; font-weight: 700; color: var(--color-evergreen); display: block;">${t.date}</span>
-                    <span style="font-size: 1.5rem;">🌱</span>
-                  </div>
-                  <div>
-                    <h4 style="font-size: 0.9375rem; font-weight: 700; margin-bottom: 0.25rem;">${t.title}</h4>
-                    <p style="font-size: 0.8125rem; color: var(--color-charcoal); line-height: 1.45;">${t.note}</p>
-                  </div>
+          <div class="apple-section-header">Garis Waktu Dampak Lapangan</div>
+          <div class="apple-inset-group">
+            ${state.campaigns[0].timelineUpdates.map(u => `
+              <div class="apple-cell" style="flex-direction: column; align-items: flex-start; gap: 0.35rem;">
+                <div style="display: flex; justify-content: space-between; width: 100%; align-items: baseline;">
+                  <span style="font-weight: 600; font-size: 0.9375rem; color: var(--apple-text-primary);">${u.title}</span>
+                  <span style="font-size: 0.75rem; color: var(--apple-text-secondary);">${u.date}</span>
                 </div>
-              `).join('')}
-            </div>
+                <div style="font-size: 0.8125rem; color: var(--apple-text-secondary); line-height: 1.45;">
+                  ${u.note}
+                </div>
+              </div>
+            `).join('')}
           </div>
 
-          <!-- Sertifikat Kontribusi Hijau Preview -->
-          <div style="background: #FFFFFF; border: 2px solid var(--color-evergreen); border-radius: var(--radius-lg); padding: 2rem; text-align: center; box-shadow: var(--shadow-subtle);">
-            <span style="font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-evergreen);">Official Digital Green Certificate</span>
-            <h3 style="margin: 0.5rem 0; font-size: 1.25rem;">Sertifikat Pelestarian Ekosistem Air</h3>
-            <p style="font-size: 0.875rem; color: var(--color-muted); margin-bottom: 1.25rem;">
-              Bukti sah partisipasi pendanaan konservasi mata air Tuk Bismo bersama BUMDes Tirta & PDAM Kabupaten Batang.
-            </p>
-            <div style="padding: 1.25rem; background: var(--color-beige); border-radius: var(--radius-sm); margin-bottom: 1.25rem; font-size: 0.875rem; font-weight: 600; border: 1px dashed var(--color-evergreen);">
-              No. Registrasi Hijau: <strong>BLK-CERT-2026-BATANG-098</strong>
+          <!-- Digital Green Certificate Mockup -->
+          <div class="apple-section-header" style="margin-top: 1.5rem;">Sertifikat Adopsi Pohon</div>
+          <div class="apple-inset-group" style="padding: 1.5rem; text-align: center;">
+            <div style="display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border-radius: 50%; background: rgba(5,150,105,0.1); margin-bottom: 0.75rem;">
+              <span style="font-size: 1.5rem;">🌱</span>
             </div>
-            <button class="btn btn-secondary" style="font-size: 0.875rem; width: 100%; padding: 0.75rem;" onclick="alert('Mengunduh Sertifikat Kontribusi Hijau Digital (PDF Resmi)...')">
-              📥 Unduh Tanda Terima & Sertifikat Digital
+            <div style="font-weight: 700; font-size: 1.05rem; color: var(--apple-text-primary); margin-bottom: 0.25rem;">
+              Green Adoption Certificate
+            </div>
+            <div style="font-size: 0.8125rem; color: var(--apple-text-secondary); margin-bottom: 1rem;">
+              Tiap donasi tercatat abadi dan terverifikasi di buku kas konservasi BUMDes Tirta Bismo.
+            </div>
+            <button class="apple-button-secondary" style="font-size: 0.8125rem; padding: 0.45rem 1rem;" onclick="alert('Sertifikat Digital Konservasi BelikHub diterbitkan atas nama Anda!')">
+              Unduh E-Sertifikat
             </button>
           </div>
         </div>
@@ -176,11 +189,14 @@ export function renderDonaturView() {
 export function attachDonaturListeners(container) {
   if (!container) return;
 
-  const nominalBtns = container.querySelectorAll('.btn-nominal');
-  const customInput = container.querySelector('#donate-custom-amount');
-  nominalBtns.forEach(btn => {
+  // Preset buttons
+  const buttons = container.querySelectorAll('.btn-quick-amount');
+  const amountInput = container.querySelector('#donor-amount');
+  buttons.forEach(btn => {
     btn.addEventListener('click', () => {
-      customInput.value = btn.getAttribute('data-amount');
+      if (amountInput) {
+        amountInput.value = btn.dataset.amount;
+      }
     });
   });
 
@@ -188,43 +204,43 @@ export function attachDonaturListeners(container) {
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = container.querySelector('#donate-name').value.trim();
-      const amount = Number(customInput.value) || 50000;
-      const campId = container.querySelector('#donate-campaign').value;
-      const type = container.querySelector('input[name="donor-type"]:checked').value;
-
-      if (!name) {
-        alert('Mohon isi nama donatur / instansi.');
-        return;
-      }
-
-      const newDonation = {
-        id: 'don_' + Date.now(),
-        campaignId: campId,
-        donorName: name,
-        donorType: type,
-        amount: amount,
-        status: 'pending', // goes to admin verification queue
-        date: new Date().toISOString(),
-        referenceNo: 'DON-' + Math.floor(100000 + Math.random() * 900000)
-      };
+      const campaignId = container.querySelector('#donate-campaign').value;
+      const donorName = container.querySelector('#donor-name').value.trim();
+      const amount = Number(container.querySelector('#donor-amount').value) || 50000;
+      const paymentChannel = container.querySelector('#donor-payment-channel').value;
 
       const state = getStore();
-      const donations = [newDonation, ...state.donations];
 
-      // Update campaign collected amount
+      // Update campaigns collected
       const campaigns = state.campaigns.map(c => {
-        if (c.id === campId) {
-          const col = c.collectedAmount + amount;
-          const pct = Math.min(100, Math.round((col / c.targetAmount) * 100));
-          return { ...c, collectedAmount: col, progressPercent: pct };
+        if (c.id === campaignId) {
+          const newCollected = c.collectedAmount + amount;
+          return {
+            ...c,
+            collectedAmount: newCollected,
+            progressPercent: Math.min(100, Math.round((newCollected / c.targetAmount) * 100))
+          };
         }
         return c;
       });
 
-      updateStore({ donations, campaigns });
-      alert(`Terima kasih! Donasi sebesar Rp ${amount.toLocaleString('id-ID')} dari ${name} telah masuk ke sistem. Bukti transfer sekarang sedang menunggu pengesahan di Pusat Antrean Admin PDAM.`);
-      container.querySelector('#donate-name').value = '';
+      // New donation transaction
+      const newDonation = {
+        id: `don_${Date.now()}`,
+        campaignId,
+        donorName,
+        amount,
+        paymentChannel,
+        status: 'pending',
+        timestamp: new Date().toISOString()
+      };
+
+      updateStore({
+        campaigns,
+        donations: [newDonation, ...state.donations]
+      });
+
+      alert(`Terima kasih atas donasi sebesar Rp ${amount.toLocaleString('id-ID')} untuk restorasi mata air Batang! Status kini tersimpan di antrean verifikasi.`);
     });
   }
 }

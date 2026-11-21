@@ -12,204 +12,241 @@ export function renderAdminView() {
   const pendingReports = state.reports.filter(r => r.status === 'pending');
 
   return `
-    <div class="role-view admin-view container" style="padding-top: 2rem; padding-bottom: 4rem;">
-      <!-- Header Banner Role -->
-      <div style="background: linear-gradient(135deg, rgba(55,80,51,0.08) 0%, rgba(253,253,247,0.6) 100%); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 2rem 2.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
-        <div>
-          <span class="eyebrow" style="color: var(--color-evergreen);">Portal Pengawasan PDAM Batang • Super Administrator</span>
-          <h1 style="font-size: clamp(1.75rem, 3vw, 2.5rem); margin-top: 0.25rem; margin-bottom: 0.5rem;">Macro Dashboard & Pusat Otoritas Verifikasi</h1>
-          <p class="text-muted" style="font-size: 1rem;">
-            Pengawasan Agregat Sumber Air Se-Kabupaten Batang • Audit Transparansi Dana & Disposisi Kerusakan
-          </p>
-        </div>
-        <div style="display: flex; gap: 1rem; align-items: center;">
-          <div style="background: #FFFFFF; padding: 0.875rem 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--color-border); box-shadow: var(--shadow-subtle);">
-            <span style="font-size: 0.75rem; color: var(--color-muted); text-transform: uppercase; font-weight: 600; display: block;">Status Jaringan</span>
-            <span style="font-weight: 700; color: var(--color-evergreen); font-size: 1rem;">● 4 Mata Air Termonitor</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Macro Dashboard se-Kabupaten Batang -->
-      <div style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 2.5rem; box-shadow: var(--shadow-subtle);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
-          <div>
-            <span class="eyebrow">Macro Dashboard</span>
-            <h2 style="font-size: 1.5rem;">Ringkasan Agregat Lintas Mata Air Kabupaten Batang</h2>
-            <p class="text-muted" style="font-size: 0.875rem; margin-top: 0.25rem;">Tuk Bismo, Tuk Silumut, Tuk Luwung, dan Tuk Kalisari</p>
-          </div>
-          <span style="font-size: 0.8125rem; background: rgba(55,80,51,0.12); color: var(--color-evergreen); padding: 0.35rem 0.85rem; border-radius: var(--radius-full); font-weight: 700;">
-            Kapasitas Gabungan: ${totalDischarge} L/detik
+    <div class="role-view admin-view container" style="padding-top: 1.5rem; padding-bottom: 4rem; max-width: 960px;">
+      
+      <!-- Apple Health Top Header -->
+      <div style="margin-bottom: 2rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+          <span class="pulsing-dot emerald"></span>
+          <span style="font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-emerald);">
+            Super Admin • PDAM Batang
           </span>
         </div>
+        <h1 style="font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 800; letter-spacing: -0.03em; margin: 0; color: var(--apple-text-primary);">
+          Macro Dashboard & Pusat Otoritas
+        </h1>
+        <p style="font-size: 0.9375rem; color: var(--apple-text-secondary); margin-top: 0.25rem;">
+          Ringkasan Agregat Lintas Mata Air Kabupaten Batang • Verifikasi Laporan & Transaksi Donasi
+        </p>
+      </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
-          <div style="background: var(--color-beige); padding: 1.5rem; border-radius: var(--radius-md); border-left: 4px solid var(--color-evergreen);">
-            <span style="font-size: 0.8125rem; color: var(--color-muted); text-transform: uppercase; font-weight: 700;">Total Debit Gabungan</span>
-            <div style="font-size: 2.25rem; font-weight: 800; color: var(--color-evergreen); margin: 0.35rem 0;">${totalDischarge} L/s</div>
-            <span style="font-size: 0.8125rem; color: var(--color-muted);">Pasokan akuifer lereng Dieng Utara</span>
+      <!-- Macro Metric Highlights (Apple Health Style) -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+        <div class="apple-inset-group" style="padding: 1.25rem 1.5rem; margin-bottom: 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-text-secondary);">
+              Total Debit Gabungan
+            </span>
+            <span class="pulsing-dot emerald"></span>
           </div>
-
-          <div style="background: var(--color-beige); padding: 1.5rem; border-radius: var(--radius-md); border-left: 4px solid var(--color-charcoal);">
-            <span style="font-size: 0.8125rem; color: var(--color-muted); text-transform: uppercase; font-weight: 700;">Total KK Terlayani</span>
-            <div style="font-size: 2.25rem; font-weight: 800; color: var(--color-black); margin: 0.35rem 0;">${totalHouseholds} KK</div>
-            <span style="font-size: 0.8125rem; color: var(--color-muted);">Tersebar di 4 desa Kec. Blado</span>
+          <div class="apple-stat-big" style="color: var(--apple-emerald); margin: 0.35rem 0;">
+            ${totalDischarge}<span class="unit">L/s</span>
           </div>
-
-          <div style="background: var(--color-beige); padding: 1.5rem; border-radius: var(--radius-md); border-left: 4px solid #0096F7;">
-            <span style="font-size: 0.8125rem; color: var(--color-muted); text-transform: uppercase; font-weight: 700;">Rata-rata Uptime Sensor</span>
-            <div style="font-size: 2.25rem; font-weight: 800; color: #0096F7; margin: 0.35rem 0;">${avgUptime}%</div>
-            <span style="font-size: 0.8125rem; color: var(--color-muted);">Telemetri solar ESP32 handal</span>
+          <div style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+            Pasokan 4 mata air lereng Dieng Utara
           </div>
         </div>
 
-        <!-- Table 4 Mata Air -->
-        <div style="overflow-x: auto;">
-          <table style="width: 100%; border-collapse: collapse; font-size: 0.875rem; text-align: left;">
-            <thead>
-              <tr style="border-bottom: 2px solid var(--color-border); color: var(--color-muted);">
-                <th style="padding: 0.875rem 0.75rem;">Nama Mata Air</th>
-                <th style="padding: 0.875rem 0.75rem;">Lokasi / Desa</th>
-                <th style="padding: 0.875rem 0.75rem;">Debit Aktual</th>
-                <th style="padding: 0.875rem 0.75rem;">Baseline Aliran</th>
-                <th style="padding: 0.875rem 0.75rem;">Status Sensor</th>
-                <th style="padding: 0.875rem 0.75rem;">Uptime</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${state.springs.map(s => `
-                <tr style="border-bottom: 1px solid var(--color-border);">
-                  <td style="padding: 1rem 0.75rem; font-weight: 700;">${s.name}</td>
-                  <td style="padding: 1rem 0.75rem; color: var(--color-muted);">${s.village}, Kec. ${s.district}</td>
-                  <td style="padding: 1rem 0.75rem; font-weight: 800; color: var(--color-evergreen); font-size: 1rem;">${s.currentDischarge} L/s</td>
-                  <td style="padding: 1rem 0.75rem; color: var(--color-muted);">${s.baselineDischarge} L/s</td>
-                  <td style="padding: 1rem 0.75rem;">
-                    <span style="padding: 0.25rem 0.65rem; border-radius: var(--radius-full); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; ${s.status === 'normal' ? 'background: rgba(55,80,51,0.12); color: var(--color-evergreen);' : s.status === 'warning' ? 'background: rgba(255,189,0,0.18); color: #9A6F00;' : 'background: rgba(255,64,0,0.15); color: #CC3300;'}">
-                      ${s.status}
+        <div class="apple-inset-group" style="padding: 1.25rem 1.5rem; margin-bottom: 0;">
+          <span style="font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-text-secondary);">
+            KK Terlayani
+          </span>
+          <div class="apple-stat-big" style="margin: 0.35rem 0;">
+            ${totalHouseholds}<span class="unit">KK</span>
+          </div>
+          <div style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+            Tersebar di 4 desa Kec. Blado
+          </div>
+        </div>
+
+        <div class="apple-inset-group" style="padding: 1.25rem 1.5rem; margin-bottom: 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-text-secondary);">
+              Uptime Sensor IoT
+            </span>
+            <span class="pulsing-dot emerald"></span>
+          </div>
+          <div class="apple-stat-big" style="color: var(--apple-text-primary); margin: 0.35rem 0;">
+            ${avgUptime}<span class="unit">%</span>
+          </div>
+          <div style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+            Rata-rata keandalan telemetri solar
+          </div>
+        </div>
+      </div>
+
+      <!-- Spring Table as Inset Group -->
+      <div class="apple-section-header">Status Mata Air Se-Kabupaten Batang</div>
+      <div class="apple-inset-group" style="overflow-x: auto; margin-bottom: 2.5rem;">
+        <div style="min-width: 600px;">
+          ${state.springs.map((s, idx) => `
+            <div class="apple-cell" style="display: grid; grid-template-columns: 2fr 1.5fr 1fr 1fr; align-items: center;">
+              <div>
+                <div style="font-weight: 700; font-size: 0.9375rem; color: var(--apple-text-primary);">${s.name}</div>
+                <div style="font-size: 0.8125rem; color: var(--apple-text-secondary); margin-top: 2px;">${s.village}, Kec. ${s.district}</div>
+              </div>
+              <div>
+                <div class="apple-stat-big" style="font-size: 1.15rem; color: var(--apple-emerald);">
+                  ${s.currentDischarge} <span style="font-size: 0.75rem; color: var(--apple-text-secondary);">L/s</span>
+                </div>
+                <div style="font-size: 0.75rem; color: var(--apple-text-tertiary);">Base: ${s.baselineDischarge} L/s</div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.35rem;">
+                <span class="pulsing-dot ${s.status === 'normal' ? 'emerald' : s.status === 'warning' ? 'amber' : 'rose'}"></span>
+                <span style="font-size: 0.75rem; font-weight: 600; text-transform: capitalize; color: var(--apple-text-primary);">
+                  ${s.status}
+                </span>
+              </div>
+              <div style="text-align: right; font-size: 0.8125rem; font-weight: 600; color: var(--apple-text-secondary); font-variant-numeric: tabular-nums;">
+                ${s.sensorUptime}% Uptime
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- 3-Lane Verification Queue -->
+      <div class="apple-section-header">Pusat Antrean Verifikasi Otoritas</div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
+        
+        <!-- Lane 1: Verifikasi Donasi -->
+        <div>
+          <div class="apple-section-header" style="display: flex; justify-content: space-between; align-items: baseline;">
+            <span>1. Bukti Donasi CSR & Individu</span>
+            <span style="font-size: 0.75rem; font-weight: 500; text-transform: none; color: var(--apple-text-secondary);">
+              ${pendingDonations.length} Pending
+            </span>
+          </div>
+
+          <div class="apple-inset-group">
+            ${pendingDonations.length === 0 ? `
+              <div class="apple-cell" style="justify-content: center; color: var(--apple-text-secondary); font-size: 0.875rem; padding: 2rem;">
+                Semua donasi telah diverifikasi ✓
+              </div>
+            ` : pendingDonations.map(d => {
+              const channel = (d.paymentChannel || d.paymentMethod || d.referenceNo || 'QRIS').toUpperCase();
+              const dateStr = d.timestamp || d.date ? new Date(d.timestamp || d.date).toLocaleDateString('id-ID') : 'Hari ini';
+              return `
+              <div class="apple-cell" style="flex-direction: column; align-items: flex-start; gap: 0.5rem;">
+                <div style="display: flex; justify-content: space-between; width: 100%; align-items: baseline;">
+                  <span style="font-weight: 600; font-size: 0.9375rem; color: var(--apple-text-primary);">${d.donorName}</span>
+                  <span style="font-weight: 700; font-size: 0.9375rem; color: var(--apple-emerald); font-variant-numeric: tabular-nums;">
+                    Rp ${(d.amount).toLocaleString('id-ID')}
+                  </span>
+                </div>
+                <div style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+                  Kanal / Ref: ${channel} • ${dateStr}
+                </div>
+                <div style="display: flex; gap: 0.5rem; width: 100%; margin-top: 0.35rem;">
+                  <button class="apple-button-primary btn-approve-donation" data-id="${d.id}" style="flex: 1; padding: 0.45rem; font-size: 0.8125rem;">
+                    Verifikasi Lunas
+                  </button>
+                  <button class="apple-button-secondary btn-reject-donation" data-id="${d.id}" style="padding: 0.45rem 0.85rem; font-size: 0.8125rem; color: #E11D48;">
+                    Tolak
+                  </button>
+                </div>
+              </div>
+            `}).join('')}
+          </div>
+        </div>
+
+        <!-- Lane 2: Verifikasi Laporan Lapangan -->
+        <div>
+          <div class="apple-section-header" style="display: flex; justify-content: space-between; align-items: baseline;">
+            <span>2. Disposisi Laporan Patroli</span>
+            <span style="font-size: 0.75rem; font-weight: 500; text-transform: none; color: var(--apple-text-secondary);">
+              ${pendingReports.length} Menunggu Disposisi
+            </span>
+          </div>
+
+          <div class="apple-inset-group">
+            ${pendingReports.length === 0 ? `
+              <div class="apple-cell" style="justify-content: center; color: var(--apple-text-secondary); font-size: 0.875rem; padding: 2rem;">
+                Semua laporan telah ditindaklanjuti ✓
+              </div>
+            ` : pendingReports.map(r => {
+              const coords = r.coordinates || r.location || { lat: -7.0652, lng: 109.8451 };
+              const title = r.title || r.categoryLabel || r.type || 'Laporan Temuan';
+              const reporter = r.reporterName || r.submittedBy || 'Petugas / Warga';
+              return `
+              <div class="apple-cell" style="flex-direction: column; align-items: flex-start; gap: 0.5rem;">
+                <div style="display: flex; justify-content: space-between; width: 100%; align-items: center;">
+                  <span style="font-weight: 600; font-size: 0.9375rem; color: var(--apple-text-primary);">${title}</span>
+                  <div style="display: flex; align-items: center; gap: 0.35rem;">
+                    <span class="pulsing-dot ${r.severity === 'mendesak' ? 'rose' : r.severity === 'sedang' ? 'amber' : 'emerald'}"></span>
+                    <span style="font-size: 0.75rem; font-weight: 600; text-transform: capitalize; color: ${r.severity === 'mendesak' ? '#E11D48' : r.severity === 'sedang' ? '#D97706' : 'var(--apple-emerald)'};">
+                      ${r.severity}
                     </span>
-                  </td>
-                  <td style="padding: 1rem 0.75rem; font-weight: 600;">${s.sensorUptime}%</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
+                  </div>
+                </div>
+
+                <div style="font-size: 0.8125rem; color: var(--apple-text-secondary); line-height: 1.45;">
+                  ${r.description}
+                </div>
+
+                <div style="font-size: 0.75rem; color: var(--apple-text-tertiary);">
+                  📍 GPS: ${coords.lat.toFixed(4)}, ${coords.lng.toFixed(4)} • Oleh: ${reporter}
+                </div>
+
+                <div style="display: flex; gap: 0.5rem; width: 100%; margin-top: 0.35rem;">
+                  <button class="apple-button-primary btn-dispatch-report" data-id="${r.id}" style="flex: 1; padding: 0.45rem; font-size: 0.8125rem;">
+                    Disposisi Tim Teknis
+                  </button>
+                  <button class="apple-button-secondary btn-close-report" data-id="${r.id}" style="padding: 0.45rem 0.85rem; font-size: 0.8125rem;">
+                    Selesai
+                  </button>
+                </div>
+              </div>
+            `}).join('')}
+          </div>
         </div>
+
       </div>
 
-      <!-- Pusat Antrean Verifikasi 3 Jalur -->
-      <div style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 2rem; margin-bottom: 2.5rem; box-shadow: var(--shadow-subtle);">
-        <span class="eyebrow" style="color: #CC3300;">Otoritas Verifikasi & Tindak Lanjut</span>
-        <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Pusat Antrean Verifikasi (Verification Queue) 3 Jalur</h2>
-        <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 2rem;">
-          Jalur 1: Pengesahan donasi CSR/Individu • Jalur 2: Disposisi teknisi perbaikan pipa • Jalur 3: Audit rekonsiliasi kas BUMDes.
-        </p>
-
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 1.5rem;">
-          
-          <!-- Jalur 1: Donasi -->
-          <div style="background: var(--color-beige); border-radius: var(--radius-md); padding: 1.5rem; border: 1px solid var(--color-border);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-              <strong style="font-size: 0.9375rem;">Jalur 1: Verifikasi Donasi</strong>
-              <span style="font-size: 0.75rem; background: #FFFFFF; padding: 0.25rem 0.6rem; border-radius: var(--radius-full); font-weight: 700; color: ${pendingDonations.length > 0 ? '#CC3300' : 'var(--color-evergreen)'};">
-                ${pendingDonations.length} Pending
-              </span>
-            </div>
-            ${pendingDonations.length > 0 ? pendingDonations.map(d => `
-              <div style="background: #FFFFFF; border-radius: var(--radius-sm); padding: 1.125rem; margin-bottom: 0.875rem; font-size: 0.8125rem; border: 1px solid var(--color-border); box-shadow: var(--shadow-subtle);">
-                <div style="font-weight: 700; font-size: 0.875rem;">${d.donorName}</div>
-                <div style="color: var(--color-evergreen); font-weight: 800; font-size: 1rem; margin: 0.25rem 0;">Rp ${(d.amount).toLocaleString('id-ID')} (${d.donorType})</div>
-                <div style="font-size: 0.75rem; color: var(--color-muted); margin-bottom: 0.75rem;">Ref: ${d.referenceNo}</div>
-                <button class="btn btn-primary btn-verify-donation" data-id="${d.id}" style="width: 100%; padding: 0.5rem 0.875rem; font-size: 0.8125rem;">
-                  ✓ Sahkan Bukti Transfer
-                </button>
-              </div>
-            `).join('') : `
-              <div style="background: #FFFFFF; padding: 1rem; border-radius: var(--radius-sm); text-align: center; color: var(--color-muted); font-size: 0.8125rem;">
-                ✓ Seluruh donasi telah diverifikasi dan masuk kampanye.
-              </div>
-            `}
+      <!-- Master Data IoT Settings Form -->
+      <div class="apple-section-header">Konfigurasi Master Data Mata Air</div>
+      <div class="apple-inset-group">
+        <form id="form-spring-config" onsubmit="event.preventDefault();" style="padding: 1.25rem 1.5rem;">
+          <div style="font-size: 0.875rem; color: var(--apple-text-secondary); margin-bottom: 1.25rem; line-height: 1.45;">
+            Sesuaikan ambang batas debit aman & kalibrasi sensor telemetri langsung ke memori kontrol Batang.
           </div>
 
-          <!-- Jalur 2: Laporan Masalah -->
-          <div style="background: var(--color-beige); border-radius: var(--radius-md); padding: 1.5rem; border: 1px solid var(--color-border);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-              <strong style="font-size: 0.9375rem;">Jalur 2: Laporan Kerusakan</strong>
-              <span style="font-size: 0.75rem; background: #FFFFFF; padding: 0.25rem 0.6rem; border-radius: var(--radius-full); font-weight: 700; color: ${pendingReports.length > 0 ? '#CC3300' : 'var(--color-evergreen)'};">
-                ${pendingReports.length} Perlu Disposisi
-              </span>
-            </div>
-            ${pendingReports.length > 0 ? pendingReports.map(r => `
-              <div style="background: #FFFFFF; border-radius: var(--radius-sm); padding: 1.125rem; margin-bottom: 0.875rem; font-size: 0.8125rem; border: 1px solid var(--color-border); box-shadow: var(--shadow-subtle);">
-                <div style="font-weight: 700; color: #CC3300; font-size: 0.875rem;">${r.categoryLabel || r.reportType}</div>
-                <p style="font-size: 0.8125rem; color: var(--color-charcoal); margin: 0.35rem 0; line-height: 1.45;">${r.description}</p>
-                <div style="font-size: 0.75rem; color: var(--color-muted); margin-bottom: 0.75rem;">Pelapor: <strong>${r.reporterName}</strong></div>
-                <button class="btn btn-primary btn-dispatch-report" data-id="${r.id}" style="width: 100%; padding: 0.5rem 0.875rem; font-size: 0.8125rem;">
-                  ⚙ Disposisikan ke Teknisi
-                </button>
-              </div>
-            `).join('') : `
-              <div style="background: #FFFFFF; padding: 1rem; border-radius: var(--radius-sm); text-align: center; color: var(--color-muted); font-size: 0.8125rem;">
-                ✓ Tidak ada antrean laporan kerusakan baru.
-              </div>
-            `}
-          </div>
-
-          <!-- Jalur 3: Rekonsiliasi Retribusi -->
-          <div style="background: var(--color-beige); border-radius: var(--radius-md); padding: 1.5rem; border: 1px solid var(--color-border);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-              <strong style="font-size: 0.9375rem;">Jalur 3: Rekonsiliasi Kas</strong>
-              <span style="font-size: 0.75rem; background: rgba(55,80,51,0.15); color: var(--color-evergreen); padding: 0.25rem 0.6rem; border-radius: var(--radius-full); font-weight: 700;">
-                Audit Sinkron
-              </span>
-            </div>
-            <div style="background: #FFFFFF; border-radius: var(--radius-sm); padding: 1.125rem; font-size: 0.8125rem; border: 1px solid var(--color-border); box-shadow: var(--shadow-subtle);">
-              <div style="font-weight: 700; font-size: 0.875rem;">BUMDes Tirta Desa Bismo</div>
-              <div style="color: var(--color-charcoal); font-size: 0.8125rem; margin: 0.35rem 0;">Total Kas Terkumpul: <strong>Rp ${(state.villageFinances.totalCollected).toLocaleString('id-ID')}</strong> (${state.villageFinances.collectionRate}%)</div>
-              <p style="font-size: 0.75rem; color: var(--color-muted); margin-bottom: 0.75rem;">Rekening Bank Jateng Unit Air: 3-021-98765-1</p>
-              <button class="btn btn-secondary" style="width: 100%; padding: 0.5rem 0.875rem; font-size: 0.8125rem; font-weight: 600;" onclick="alert('Hasil Audit Rekonsiliasi Kas BUMDes Tirta:\\n✓ Setoran bank dan saldo kas cocok 100%\\n✓ Tidak ditemukan tunggakan ilegal')">
-                🔍 Validasi Rekonsiliasi Kas
-              </button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Manajemen Master Data -->
-      <div style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow-subtle);">
-        <span class="eyebrow">Konfigurasi Parameter Sistem</span>
-        <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Manajemen Master Data Mata Air & Tarif Retribusi</h2>
-        <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 1.5rem;">
-          Atur kapasitas baseline hidrologi dan standar tarif retribusi air desa per kubikasi/KK.
-        </p>
-
-        <form id="form-master-data" onsubmit="event.preventDefault();" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
-          <div class="form-group">
-            <label for="master-spring-id" class="form-label">Pilih Titik Mata Air</label>
-            <select id="master-spring-id" class="form-select">
+          <div class="form-group" style="margin-bottom: 1rem;">
+            <label for="admin-spring-select" class="form-label" style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+              Pilih Mata Air
+            </label>
+            <select id="admin-spring-select" class="form-select" style="font-size: 0.9375rem; border-radius: 10px;">
               ${state.springs.map(s => `
-                <option value="${s.id}">${s.name} (${s.village}) — ${s.currentDischarge} L/s</option>
+                <option value="${s.id}">${s.name} (${s.village})</option>
               `).join('')}
             </select>
           </div>
 
-          <div class="form-group">
-            <label for="master-baseline" class="form-label">Kapasitas Baseline Debit Awal (L/detik)</label>
-            <input type="number" id="master-baseline" class="form-input" value="25.0" step="0.1">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.25rem;">
+            <div>
+              <label for="admin-baseline" class="form-label" style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+                Baseline Debit (L/s)
+              </label>
+              <input type="number" step="0.1" id="admin-baseline" class="form-input" value="25.0" style="border-radius: 10px; font-variant-numeric: tabular-nums;" required>
+            </div>
+            <div>
+              <label for="admin-status" class="form-label" style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+                Status Override
+              </label>
+              <select id="admin-status" class="form-select" style="font-size: 0.875rem; border-radius: 10px;">
+                <option value="normal">Normal</option>
+                <option value="warning">Peringatan</option>
+                <option value="critical">Kritis</option>
+              </select>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="master-tariff" class="form-label">Standar Tarif Dasar Iuran (Rp / KK / bulan)</label>
-            <input type="number" id="master-tariff" class="form-input" value="20000" step="1000">
-          </div>
-
-          <div style="display: flex; align-items: flex-end; margin-bottom: 1.25rem;">
-            <button type="submit" id="btn-save-master" class="btn btn-primary" style="width: 100%; padding: 0.875rem;">
-              💾 Simpan Perubahan Master Data
-            </button>
-          </div>
+          <button type="submit" id="btn-save-spring-config" class="apple-button-primary" style="width: 100%;">
+            Simpan Kalibrasi Mata Air
+          </button>
         </form>
       </div>
+
     </div>
   `;
 }
@@ -217,55 +254,73 @@ export function renderAdminView() {
 export function attachAdminListeners(container) {
   if (!container) return;
 
-  const verifyDonationBtns = container.querySelectorAll('.btn-verify-donation');
-  verifyDonationBtns.forEach(btn => {
+  // Approve donation
+  container.querySelectorAll('.btn-approve-donation').forEach(btn => {
     btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-id');
+      const id = btn.dataset.id;
       const state = getStore();
-      const donations = state.donations.map(d => {
-        if (d.id === id) {
-          return { ...d, status: 'verified' };
-        }
-        return d;
-      });
-      updateStore({ donations });
-      alert(`Donasi [${id}] berhasil diverifikasi dan disahkan! Notifikasi dan sertifikat resmi telah diterbitkan untuk donatur.`);
+      const updated = state.donations.map(d => d.id === id ? { ...d, status: 'verified' } : d);
+      updateStore({ donations: updated });
+      alert('Bukti donasi diverifikasi resmi! Dana otomatis tercatat di kas konservasi.');
     });
   });
 
-  const dispatchBtns = container.querySelectorAll('.btn-dispatch-report');
-  dispatchBtns.forEach(btn => {
+  // Reject donation
+  container.querySelectorAll('.btn-reject-donation').forEach(btn => {
     btn.addEventListener('click', () => {
-      const id = btn.getAttribute('data-id');
+      const id = btn.dataset.id;
       const state = getStore();
-      const reports = state.reports.map(r => {
-        if (r.id === id) {
-          return { ...r, status: 'in_progress' };
-        }
-        return r;
-      });
-      updateStore({ reports });
-      alert(`Laporan kerusakan [${id}] berhasil didisposisikan ke tim teknisi lapangan! Status diperbarui menjadi "Sedang Diperbaiki".`);
+      const updated = state.donations.map(d => d.id === id ? { ...d, status: 'rejected' } : d);
+      updateStore({ donations: updated });
+      alert('Bukti donasi ditolak.');
     });
   });
 
-  const masterForm = container.querySelector('#form-master-data');
-  if (masterForm) {
-    masterForm.addEventListener('submit', (e) => {
+  // Dispatch report
+  container.querySelectorAll('.btn-dispatch-report').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.id;
+      const state = getStore();
+      const updated = state.reports.map(r => r.id === id ? { ...r, status: 'investigating' } : r);
+      updateStore({ reports: updated });
+      alert('Surat tugas teknisi PDAM Batang berhasil diterbitkan untuk inspeksi ke lokasi temuan.');
+    });
+  });
+
+  // Close report
+  container.querySelectorAll('.btn-close-report').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.id;
+      const state = getStore();
+      const updated = state.reports.map(r => r.id === id ? { ...r, status: 'resolved' } : r);
+      updateStore({ reports: updated });
+      alert('Laporan ditandai telah selesai ditangani di lapangan.');
+    });
+  });
+
+  // Spring config form
+  const springForm = container.querySelector('#form-spring-config');
+  if (springForm) {
+    springForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const springId = container.querySelector('#master-spring-id').value;
-      const baseline = parseFloat(container.querySelector('#master-baseline').value) || 25.0;
+      const springId = container.querySelector('#admin-spring-select').value;
+      const baseline = parseFloat(container.querySelector('#admin-baseline').value) || 25.0;
+      const status = container.querySelector('#admin-status').value;
 
       const state = getStore();
-      const springs = state.springs.map(s => {
+      const updated = state.springs.map(s => {
         if (s.id === springId) {
-          return { ...s, baselineDischarge: baseline };
+          return {
+            ...s,
+            baselineDischarge: baseline,
+            status: status
+          };
         }
         return s;
       });
 
-      updateStore({ springs });
-      alert('Master data mata air dan parameter tarif retribusi berhasil diperbarui!');
+      updateStore({ springs: updated });
+      alert(`Konfigurasi mata air berhasil diperbarui di sistem PDAM Batang!`);
     });
   }
 }

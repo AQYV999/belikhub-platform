@@ -5,180 +5,225 @@ export function renderPengelolaView() {
   const fin = state.villageFinances;
 
   return `
-    <div class="role-view pengelola-view container" style="padding-top: 2rem; padding-bottom: 4rem;">
-      <!-- Header Banner Role -->
-      <div style="background: linear-gradient(135deg, rgba(55,80,51,0.08) 0%, rgba(253,253,247,0.6) 100%); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 2rem 2.5rem; margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
-        <div>
-          <span class="eyebrow" style="color: var(--color-evergreen);">Portal Pengelola • BUMDes Tirta Desa Bismo</span>
-          <h1 style="font-size: clamp(1.75rem, 3vw, 2.5rem); margin-top: 0.25rem; margin-bottom: 0.5rem;">Dashboard Operasional & Tata Kelola Kas Air</h1>
-          <p class="text-muted" style="font-size: 1rem;">
-            Unit Usaha Pengelolaan Air Bersih Komunitas • Kecamatan Blado, Kabupaten Batang
-          </p>
+    <div class="role-view pengelola-view container" style="padding-top: 1.5rem; padding-bottom: 4rem; max-width: 960px;">
+      
+      <!-- Apple Health Top Header -->
+      <div style="margin-bottom: 2rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+          <span class="pulsing-dot emerald"></span>
+          <span style="font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-emerald);">
+            BUMDes Tirta • Desa Bismo
+          </span>
         </div>
-        <div style="display: flex; gap: 1rem; align-items: center;">
-          <div style="background: #FFFFFF; padding: 0.875rem 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--color-border); box-shadow: var(--shadow-subtle);">
-            <span style="font-size: 0.75rem; color: var(--color-muted); text-transform: uppercase; font-weight: 600; display: block;">Status Buku Kas</span>
-            <span style="font-weight: 700; color: var(--color-evergreen); font-size: 1rem;">✓ Terbuka & Transparan</span>
-          </div>
-        </div>
+        <h1 style="font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 800; letter-spacing: -0.03em; margin: 0; color: var(--apple-text-primary);">
+          Tata Kelola Kas Air
+        </h1>
+        <p style="font-size: 0.9375rem; color: var(--apple-text-secondary); margin-top: 0.25rem;">
+          Unit Usaha Pengelolaan Air Bersih Komunitas • Kec. Blado, Batang
+        </p>
       </div>
 
-      <!-- KPI Metrics Iuran Desa -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem;">
-        <div style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.75rem; box-shadow: var(--shadow-subtle); border-top: 4px solid var(--color-evergreen);">
-          <span style="font-size: 0.8125rem; color: var(--color-muted); text-transform: uppercase; font-weight: 700;">Collection Rate Iuran</span>
-          <div style="font-size: 2.5rem; font-weight: 800; color: var(--color-evergreen); margin: 0.35rem 0;">${fin.collectionRate}%</div>
-          <p style="font-size: 0.8125rem; color: var(--color-muted);">Persentase warga tertagih bulan ini (Target desa: >80%)</p>
+      <!-- Hero Macro Metric Cards (Apple Health Highlights) -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+        
+        <!-- Collection Rate -->
+        <div class="apple-inset-group" style="padding: 1.25rem 1.5rem; margin-bottom: 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-text-secondary);">
+              Collection Rate
+            </span>
+            <span class="pulsing-dot emerald"></span>
+          </div>
+          <div class="apple-stat-big" style="color: var(--apple-emerald); margin: 0.35rem 0;">
+            ${fin.collectionRate}<span class="unit">%</span>
+          </div>
+          <div style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+            Target desa: &gt;80% • Tertagih bulan ini
+          </div>
         </div>
 
-        <div style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.75rem; box-shadow: var(--shadow-subtle); border-top: 4px solid var(--color-charcoal);">
-          <span style="font-size: 0.8125rem; color: var(--color-muted); text-transform: uppercase; font-weight: 700;">Uang Terkumpul / Target</span>
-          <div style="font-size: 1.75rem; font-weight: 800; color: var(--color-black); margin: 0.35rem 0;">
+        <!-- Uang Terkumpul -->
+        <div class="apple-inset-group" style="padding: 1.25rem 1.5rem; margin-bottom: 0;">
+          <span style="font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-text-secondary);">
+            Penerimaan / Target
+          </span>
+          <div class="apple-stat-big" style="font-size: 1.85rem; margin: 0.35rem 0;">
             Rp ${(fin.totalCollected).toLocaleString('id-ID')}
           </div>
-          <p style="font-size: 0.8125rem; color: var(--color-muted);">dari target iuran Rp ${(fin.totalTarget).toLocaleString('id-ID')} (380 KK)</p>
+          <div style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+            dari total target Rp ${(fin.totalTarget).toLocaleString('id-ID')} (380 KK)
+          </div>
         </div>
 
-        <div style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.75rem; box-shadow: var(--shadow-subtle); border-top: 4px solid #0096F7;">
-          <span style="font-size: 0.8125rem; color: var(--color-muted); text-transform: uppercase; font-weight: 700;">Saldo Kas Pemeliharaan Pipa</span>
-          <div style="font-size: 2rem; font-weight: 800; color: var(--color-evergreen); margin: 0.35rem 0;">
+        <!-- Saldo Kas Pemeliharaan -->
+        <div class="apple-inset-group" style="padding: 1.25rem 1.5rem; margin-bottom: 0;">
+          <span style="font-size: 0.8125rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-text-secondary);">
+            Dana Darurat Pipa
+          </span>
+          <div class="apple-stat-big" style="font-size: 1.85rem; color: var(--apple-text-primary); margin: 0.35rem 0;">
             Rp ${(fin.maintenanceFundBalance).toLocaleString('id-ID')}
           </div>
-          <p style="font-size: 0.8125rem; color: var(--color-muted);">Cadangan dana darurat pipa bocor & pembersihan sedimen</p>
+          <div style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+            Cadangan operasional pipa & sedimentasi
+          </div>
         </div>
+
       </div>
 
-      <!-- Two Column: Meter Reading & Conservation Update -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 2rem;">
+      <!-- Two Columns: Single-hand Meter Entry & Conservation Progress -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 1.5rem;">
         
-        <!-- Meter Reading & Cash Collection -->
-        <div style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow-subtle);">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-            <span class="eyebrow">Input Catatan Kubikasi</span>
-            <span style="font-size: 0.75rem; background: var(--color-beige); padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600;">Petugas Lapangan</span>
-          </div>
-          <h2 style="font-size: 1.375rem; margin-bottom: 0.5rem;">Pencatatan Meteran Air Warga</h2>
-          <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 1.5rem;">
-            Masukkan pembacaan meter fisik kubikasi air bulanan dan terbitkan tagihan warga secara otomatis.
-          </p>
-
-          <form id="form-meter-reading" onsubmit="event.preventDefault();" style="margin-bottom: 2rem; background: var(--color-beige); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--color-border);">
-            <div class="form-group">
-              <label for="meter-resident-select" class="form-label">Kepala Keluarga / ID Sambungan</label>
-              <select id="meter-resident-select" class="form-select">
-                <option value="Bapak Slamet Raharjo (BSM-8921)">Bapak Slamet Raharjo — BSM-8921 (RT 01)</option>
-                <option value="Ibu Siti Aminah (BSM-8922)">Ibu Siti Aminah — BSM-8922 (RT 01)</option>
-                <option value="Bapak Joko Wahyudi (BSM-8923)">Bapak Joko Wahyudi — BSM-8923 (RT 02)</option>
-                <option value="Bapak Suwarno (BSM-8924)">Bapak Suwarno — BSM-8924 (RT 02)</option>
-              </select>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-              <div class="form-group">
-                <label for="input-meter-m3" class="form-label">Angka Meter (m³)</label>
-                <input type="number" id="input-meter-m3" class="form-input" value="18" min="1" max="100" required>
+        <!-- Column 1: Meter Reading & Direct Collection -->
+        <div>
+          <div class="apple-section-header">Pencatatan Meteran Warga</div>
+          <div class="apple-inset-group">
+            <form id="form-meter-reading" onsubmit="event.preventDefault();" style="padding: 1.25rem 1.5rem;">
+              <div style="font-size: 0.875rem; color: var(--apple-text-secondary); margin-bottom: 1.25rem; line-height: 1.45;">
+                Catat pembacaan meter kubikasi (m³) fisik bulanan untuk menerbitkan tagihan resmi secara otomatis.
               </div>
-              <div class="form-group">
-                <label for="input-pay-type" class="form-label">Status Bayar</label>
-                <select id="input-pay-type" class="form-select">
-                  <option value="Tunai">Bayar Tunai di Kantor</option>
-                  <option value="Tagihan QRIS">Terbitkan Tagihan QRIS</option>
+
+              <div class="form-group" style="margin-bottom: 1rem;">
+                <label for="meter-resident-select" class="form-label" style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+                  Kepala Keluarga / ID Sambungan
+                </label>
+                <select id="meter-resident-select" class="form-select" style="font-size: 0.9375rem; border-radius: 10px;">
+                  <option value="Bapak Slamet Raharjo (BSM-8921)">Bapak Slamet Raharjo — BSM-8921 (RT 01)</option>
+                  <option value="Ibu Siti Aminah (BSM-8922)">Ibu Siti Aminah — BSM-8922 (RT 01)</option>
+                  <option value="Bapak Joko Wahyudi (BSM-8923)">Bapak Joko Wahyudi — BSM-8923 (RT 02)</option>
+                  <option value="Bapak Suwarno (BSM-8924)">Bapak Suwarno — BSM-8924 (RT 02)</option>
                 </select>
               </div>
-            </div>
 
-            <button type="submit" id="btn-save-meter" class="btn btn-primary" style="width: 100%; margin-top: 0.75rem; padding: 0.875rem;">
-              💾 Simpan & Terbitkan Tagihan Resmi
-            </button>
-          </form>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.25rem;">
+                <div>
+                  <label for="input-meter-m3" class="form-label" style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+                    Angka Meter (m³)
+                  </label>
+                  <input type="number" id="input-meter-m3" class="form-input" value="18" min="1" max="100" style="border-radius: 10px; font-variant-numeric: tabular-nums;" required>
+                </div>
+                <div>
+                  <label for="input-pay-type" class="form-label" style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+                    Metode Bayar
+                  </label>
+                  <select id="input-pay-type" class="form-select" style="font-size: 0.875rem; border-radius: 10px;">
+                    <option value="Tunai">Bayar Tunai</option>
+                    <option value="Tagihan QRIS">Tagihan QRIS</option>
+                  </select>
+                </div>
+              </div>
 
-          <!-- List KK Terdata Terkini & Cash Collection -->
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
-            <span style="font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; color: var(--color-muted);">
-              Daftar KK Sambungan Air (Bismo RT 01 & 02)
-            </span>
-            <span style="font-size: 0.75rem; color: var(--color-evergreen); font-weight: 600;">Status Terverifikasi</span>
+              <button type="submit" id="btn-save-meter" class="apple-button-primary" style="width: 100%;">
+                Simpan & Terbitkan Tagihan
+              </button>
+            </form>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--color-beige); border-radius: var(--radius-sm); font-size: 0.8125rem; border: 1px solid var(--color-border);">
+
+          <!-- Quick Tap Inset List: Status Warga -->
+          <div class="apple-section-header">Status Sambungan Rumah (Bismo RT 01 & 02)</div>
+          <div class="apple-inset-group">
+            <div class="apple-cell">
               <div>
-                <strong style="font-size: 0.875rem; display: block;">Bapak Slamet Raharjo</strong>
-                <span style="color: var(--color-muted); font-size: 0.75rem;">ID: BSM-8921 • Pemakaian: 16 m³</span>
+                <div style="font-weight: 600; font-size: 0.9375rem; color: var(--apple-text-primary);">
+                  Bapak Slamet Raharjo
+                </div>
+                <div style="font-size: 0.8125rem; color: var(--apple-text-secondary); margin-top: 2px;">
+                  BSM-8921 • 16 m³
+                </div>
               </div>
-              <span style="color: var(--color-evergreen); font-weight: 700; background: rgba(55,80,51,0.12); padding: 0.25rem 0.6rem; border-radius: var(--radius-full);">Lunas (QRIS)</span>
+              <div style="display: flex; align-items: center; gap: 0.35rem;">
+                <span class="pulsing-dot emerald"></span>
+                <span style="font-size: 0.8125rem; font-weight: 600; color: var(--apple-emerald);">Lunas QRIS</span>
+              </div>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--color-beige); border-radius: var(--radius-sm); font-size: 0.8125rem; border: 1px solid var(--color-border);">
+            <div class="apple-cell">
               <div>
-                <strong style="font-size: 0.875rem; display: block;">Ibu Siti Aminah</strong>
-                <span style="color: var(--color-muted); font-size: 0.75rem;">ID: BSM-8922 • Pemakaian: 14 m³ • Tagihan: Rp 20.000</span>
+                <div style="font-weight: 600; font-size: 0.9375rem; color: var(--apple-text-primary);">
+                  Ibu Siti Aminah
+                </div>
+                <div style="font-size: 0.8125rem; color: var(--apple-text-secondary); margin-top: 2px;">
+                  BSM-8922 • 14 m³ • Rp 20.000
+                </div>
               </div>
-              <button class="btn btn-secondary btn-cash-collect" style="padding: 0.4rem 0.85rem; font-size: 0.75rem; font-weight: 600;" onclick="alert('Penerimaan bayar tunai Rp 20.000 dari Ibu Siti Aminah berhasil dicatat! Kas desa bertambah.')">
-                💵 Catat Bayar Tunai
+              <button class="apple-button-secondary btn-cash-collect" style="padding: 0.45rem 0.85rem; font-size: 0.8125rem;" onclick="alert('Penerimaan bayar tunai Rp 20.000 dari Ibu Siti Aminah berhasil dicatat! Kas desa bertambah.')">
+                Catat Tunai
               </button>
             </div>
 
-            <div style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--color-beige); border-radius: var(--radius-sm); font-size: 0.8125rem; border: 1px solid var(--color-border);">
+            <div class="apple-cell">
               <div>
-                <strong style="font-size: 0.875rem; display: block;">Bapak Joko Wahyudi</strong>
-                <span style="color: var(--color-muted); font-size: 0.75rem;">ID: BSM-8923 • Pemakaian: 15 m³ • Tagihan: Rp 20.000</span>
+                <div style="font-weight: 600; font-size: 0.9375rem; color: var(--apple-text-primary);">
+                  Bapak Joko Wahyudi
+                </div>
+                <div style="font-size: 0.8125rem; color: var(--apple-text-secondary); margin-top: 2px;">
+                  BSM-8923 • 15 m³ • Rp 20.000
+                </div>
               </div>
-              <button class="btn btn-secondary btn-cash-collect" style="padding: 0.4rem 0.85rem; font-size: 0.75rem; font-weight: 600;" onclick="alert('Penerimaan bayar tunai Rp 20.000 dari Bapak Joko Wahyudi berhasil dicatat! Kas desa bertambah.')">
-                💵 Catat Bayar Tunai
+              <button class="apple-button-secondary btn-cash-collect" style="padding: 0.45rem 0.85rem; font-size: 0.8125rem;" onclick="alert('Penerimaan bayar tunai Rp 20.000 dari Bapak Joko Wahyudi berhasil dicatat! Kas desa bertambah.')">
+                Catat Tunai
               </button>
             </div>
           </div>
         </div>
 
-        <!-- Publikasi Progres Konservasi Lapangan -->
-        <div style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 2rem; box-shadow: var(--shadow-subtle);">
-          <span class="eyebrow" style="color: var(--color-evergreen);">Publikasi Lapangan & Transparansi</span>
-          <h2 style="font-size: 1.375rem; margin-bottom: 0.5rem;">Publikasi Progres Konservasi Fisik</h2>
-          <p class="text-muted" style="font-size: 0.875rem; margin-bottom: 1.5rem;">
-            Unggah dokumentasi kegiatan fisik (penanaman bibit/bronjong batu) agar tampil di garis waktu dampak donatur dan admin.
-          </p>
+        <!-- Column 2: Conservation Publishing & Timeline -->
+        <div>
+          <div class="apple-section-header">Publikasi Progres Fisik</div>
+          <div class="apple-inset-group">
+            <form id="form-conservation-progress" onsubmit="event.preventDefault();" style="padding: 1.25rem 1.5rem;">
+              <div style="font-size: 0.875rem; color: var(--apple-text-secondary); margin-bottom: 1.25rem; line-height: 1.45;">
+                Unggah dokumentasi fisik (penanaman bibit/bronjong batu) agar langsung muncul di timeline donatur dan audit admin.
+              </div>
 
-          <form id="form-conservation-progress" onsubmit="event.preventDefault();" style="margin-bottom: 2rem;">
-            <div class="form-group">
-              <label for="progress-campaign-select" class="form-label">Program Restorasi Sasaran</label>
-              <select id="progress-campaign-select" class="form-select">
-                <option value="camp_001">Restorasi Hulu Tuk Bismo (1.000 Pohon Beringin & Vetiver)</option>
-                <option value="camp_002">Pembangunan Bak Penangkap & Bronjong Tuk Silumut</option>
-              </select>
-            </div>
+              <div class="form-group" style="margin-bottom: 1rem;">
+                <label for="progress-campaign-select" class="form-label" style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+                  Program Restorasi Sasaran
+                </label>
+                <select id="progress-campaign-select" class="form-select" style="font-size: 0.9375rem; border-radius: 10px;">
+                  <option value="camp_001">Restorasi Hulu Tuk Bismo (1.000 Pohon Beringin)</option>
+                  <option value="camp_002">Pembangunan Bak Penangkap & Bronjong Tuk Silumut</option>
+                </select>
+              </div>
 
-            <div class="form-group">
-              <label for="progress-activity-title" class="form-label">Judul Aktivitas Kegiatan</label>
-              <input type="text" id="progress-activity-title" class="form-input" placeholder="Contoh: Pemasangan bronjong penahan longsor di hulu Tuk Bismo" required>
-            </div>
+              <div class="form-group" style="margin-bottom: 1rem;">
+                <label for="progress-activity-title" class="form-label" style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+                  Judul Aktivitas Kegiatan
+                </label>
+                <input type="text" id="progress-activity-title" class="form-input" placeholder="Contoh: Pemasangan bronjong penahan longsor..." style="border-radius: 10px;" required>
+              </div>
 
-            <div class="form-group">
-              <label for="progress-activity-desc" class="form-label">Catatan Dokumentasi & Progres Lapangan</label>
-              <textarea id="progress-activity-desc" class="form-textarea" rows="3" placeholder="Jelaskan progres pekerjaan fisik yang telah diselesaikan bersama warga..." required></textarea>
-            </div>
+              <div class="form-group" style="margin-bottom: 1rem;">
+                <label for="progress-activity-desc" class="form-label" style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+                  Catatan Dokumentasi Lapangan
+                </label>
+                <textarea id="progress-activity-desc" class="form-textarea" rows="3" placeholder="Jelaskan progres pekerjaan fisik yang telah diselesaikan..." style="border-radius: 10px;" required></textarea>
+              </div>
 
-            <div class="form-group">
-              <label class="form-label">Foto Dokumentasi Fisik</label>
-              <input type="file" id="progress-photo" class="form-input" accept="image/*" style="font-size: 0.8125rem;">
-            </div>
+              <div class="form-group" style="margin-bottom: 1.25rem;">
+                <label class="form-label" style="font-size: 0.8125rem; color: var(--apple-text-secondary);">
+                  Foto Dokumentasi Fisik
+                </label>
+                <input type="file" id="progress-photo" class="form-input" accept="image/*" style="font-size: 0.8125rem; border-radius: 10px;">
+              </div>
 
-            <button type="submit" id="btn-publish-progress" class="btn btn-primary" style="width: 100%; padding: 0.875rem;">
-              📢 Publikasikan Dokumentasi ke Garis Waktu
-            </button>
-          </form>
-
-          <!-- Timeline Preview -->
-          <div style="font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; color: var(--color-muted); margin-bottom: 0.75rem;">
-            Dokumentasi Terbit Terkini
+              <button type="submit" id="btn-publish-progress" class="apple-button-primary" style="width: 100%;">
+                Publikasikan ke Timeline
+              </button>
+            </form>
           </div>
-          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+
+          <!-- Timeline Updates Inset Group -->
+          <div class="apple-section-header">Dokumentasi Terbit Terkini</div>
+          <div class="apple-inset-group">
             ${state.campaigns[0].timelineUpdates.map(u => `
-              <div style="background: var(--color-beige); border-radius: var(--radius-sm); padding: 1rem; font-size: 0.8125rem; border: 1px solid var(--color-border);">
-                <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 0.25rem;">
-                  <span>${u.title}</span>
-                  <span style="color: var(--color-muted); font-size: 0.75rem; font-weight: 500;">${u.date}</span>
+              <div class="apple-cell" style="flex-direction: column; align-items: flex-start; gap: 0.35rem;">
+                <div style="display: flex; justify-content: space-between; width: 100%; align-items: baseline;">
+                  <span style="font-weight: 600; font-size: 0.9375rem; color: var(--apple-text-primary);">${u.title}</span>
+                  <span style="font-size: 0.75rem; color: var(--apple-text-secondary);">${u.date}</span>
                 </div>
-                <p style="color: var(--color-charcoal); font-size: 0.75rem; line-height: 1.45;">${u.note}</p>
+                <div style="font-size: 0.8125rem; color: var(--apple-text-secondary); line-height: 1.45;">
+                  ${u.note}
+                </div>
               </div>
             `).join('')}
           </div>
