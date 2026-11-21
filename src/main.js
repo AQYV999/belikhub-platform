@@ -15,7 +15,7 @@ import { subscribeStore } from './store.js';
 
 // Application Router
 function router() {
-  const hash = window.location.hash.replace(/^#/, '') || 'home';
+  const hash = window.location.hash.replace(/^#/, '') || 'warga';
   const appContainer = document.getElementById('app');
   if (!appContainer) return;
 
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('hashchange', () => {
     router();
-    const currentHash = window.location.hash.replace(/^#/, '') || 'home';
+    const currentHash = window.location.hash.replace(/^#/, '') || 'warga';
     if (nav && nav.render) {
       nav.render(currentHash);
     }

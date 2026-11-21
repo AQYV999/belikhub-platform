@@ -1,7 +1,7 @@
 import { getStore, updateStore, resetStore, subscribeStore } from '../store.js';
 
 export function renderDemoBar() {
-  const currentHash = (typeof window !== 'undefined' ? window.location.hash.replace(/^#/, '') : '') || 'home';
+  const currentHash = (typeof window !== 'undefined' ? window.location.hash.replace(/^#/, '') : '') || 'warga';
 
   return `
     <div class="demo-bar" id="demo-bar-inner">
@@ -27,11 +27,6 @@ export function renderDemoBar() {
         </div>
       </div>
       <div class="demo-bar-right">
-        ${['warga', 'pengelola', 'relawan', 'donatur', 'admin'].includes(currentHash) ? `
-          <a href="#home" class="role-btn" style="background: rgba(255,255,255,0.18);">
-            🏠 Kembali ke Web Artikel
-          </a>
-        ` : ''}
         <button class="reset-btn" id="btn-reset-demo" title="Kembalikan data simulasi ke setelan awal pabrik">
           ↺ Reset Data Demo
         </button>
