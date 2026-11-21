@@ -926,7 +926,85 @@ p {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-/* Mobile & Small Screens Optimization (Phones & WASM Ready) */
+/* iOS Native Bottom Tab Bar Component (Mobile & WASM Thumb Ergonomics) */
+.ios-bottom-tab-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .show-mobile-only {
+    display: block !important;
+  }
+
+  .ios-bottom-tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: calc(58px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border-top: 1px solid var(--apple-hairline);
+    z-index: 9999;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.04);
+  }
+
+  .ios-tab-bar-container {
+    display: flex;
+    height: 58px;
+    align-items: center;
+    justify-content: space-around;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 0 0.5rem;
+  }
+
+  .ios-tab-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--apple-text-secondary);
+    padding: 0.35rem 0.5rem;
+    border-radius: 12px;
+    flex: 1;
+    transition: transform 120ms ease, color 120ms ease;
+  }
+
+  .ios-tab-item:active {
+    transform: scale(0.92);
+  }
+
+  .ios-tab-icon {
+    font-size: 1.25rem;
+    line-height: 1.1;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .ios-tab-label {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .ios-tab-item.active {
+    color: var(--apple-emerald);
+  }
+
+  .ios-tab-item.active .ios-tab-label {
+    font-weight: 700;
+  }
+
+  /* Leave bottom padding so cards are never obscured by bottom bar */
+  body {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+}
+
 @media (max-width: 640px) {
   :root {
     --header-height: 52px;

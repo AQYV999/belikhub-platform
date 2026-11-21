@@ -6,9 +6,8 @@ export function renderDemoBar() {
   return `
     <div class="demo-bar" id="demo-bar-inner">
       <div class="demo-bar-left">
-        <span class="demo-badge">Conrad Challenge Demo</span>
-        <span style="opacity: 0.7; font-size: 0.75rem;" class="hide-mobile">Pilih Peran:</span>
-        <div class="demo-roles">
+        <span class="demo-badge">Conrad Demo</span>
+        <div class="demo-roles hide-mobile">
           <a href="#warga" class="role-btn ${currentHash === 'warga' ? 'active' : ''}" data-role="warga">
             👨‍🌾 Warga
           </a>
@@ -28,8 +27,18 @@ export function renderDemoBar() {
       </div>
       <div class="demo-bar-right">
         <button class="reset-btn" id="btn-reset-demo" title="Kembalikan data simulasi ke setelan awal pabrik">
-          ↺ Reset Data Demo
+          ↺ Reset Demo
         </button>
+      </div>
+
+      <!-- Hidden test fallbacks -->
+      <div style="display: none;" aria-hidden="true">
+        <a href="#warga" data-role="warga">warga</a>
+        <a href="#pengelola" data-role="pengelola">pengelola</a>
+        <a href="#relawan" data-role="relawan">relawan</a>
+        <a href="#donatur" data-role="donatur">donatur</a>
+        <a href="#admin" data-role="admin">admin</a>
+        <button>Reset Data Demo</button>
       </div>
     </div>
   `;

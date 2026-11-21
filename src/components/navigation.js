@@ -2,10 +2,11 @@ export function renderNavigation(currentRoute = 'warga') {
   const isPortal = ['warga', 'pengelola', 'relawan', 'donatur', 'admin'].includes(currentRoute);
 
   return `
-    <header class="main-header" style="background: rgba(255, 255, 255, 0.85); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--apple-hairline); position: sticky; top: 0; z-index: 1000;">
-      <div class="container nav-container" style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.5rem; max-width: 1100px;">
+    <!-- Top Header: Clean & Spacious -->
+    <header class="main-header" style="background: rgba(255, 255, 255, 0.92); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--apple-hairline); position: sticky; top: 0; z-index: 1000;">
+      <div class="container nav-container" style="display: flex; justify-content: space-between; align-items: center; padding: 0.65rem 1.25rem; max-width: 1100px;">
         
-        <!-- App Logo & iOS Tab-Style Branding -->
+        <!-- App Logo & Title -->
         <a href="#warga" class="nav-logo" data-route="warga" style="display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--apple-text-primary);">
           <div style="width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #10B981 0%, #059669 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(5,150,105,0.25);">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -14,12 +15,12 @@ export function renderNavigation(currentRoute = 'warga') {
           </div>
           <div>
             <span style="font-weight: 800; font-size: 1.15rem; letter-spacing: -0.03em; color: var(--apple-text-primary); display: block; line-height: 1.1;">BelikHub</span>
-            <span style="font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-emerald);">Health App Edition</span>
+            <span class="hide-mobile" style="font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-emerald);">Dashboard Edition</span>
           </div>
         </a>
 
-        <!-- 5 Roles Apple Health Segmented Nav Tabs -->
-        <nav class="role-nav-scroll-wrapper">
+        <!-- Desktop Segmented Tabs (Visible only on Desktop/Tablet) -->
+        <nav class="desktop-role-nav hide-mobile">
           <div style="display: flex; background: rgba(0, 0, 0, 0.05); padding: 3px; border-radius: 12px; gap: 2px;">
             <a href="#warga" class="nav-role-tab ${currentRoute === 'warga' ? 'active' : ''}" data-route="warga">
               👨‍🌾 Warga
@@ -76,12 +77,38 @@ export function renderNavigation(currentRoute = 'warga') {
       <div style="display: none;" aria-hidden="true">
         <a href="#home">Home</a>
         <a href="#solutions">Solutions</a>
-        <a href="#solutions-sense">Belik Sense</a>
+        <a href="#solutions-sense">BelikSense</a>
         <a href="#solutions-conservation">Conservation Services</a>
         <a href="#projects">Projects</a>
         <a href="#about">About</a>
       </div>
     </header>
+
+    <!-- iOS Native Style Bottom Tab Bar (Mobile & WASM Thumb Navigation) -->
+    <nav class="ios-bottom-tab-bar show-mobile-only" aria-label="Mobile Navigation">
+      <div class="ios-tab-bar-container">
+        <a href="#warga" class="ios-tab-item ${currentRoute === 'warga' ? 'active' : ''}" data-route="warga">
+          <span class="ios-tab-icon">👨‍🌾</span>
+          <span class="ios-tab-label">Warga</span>
+        </a>
+        <a href="#pengelola" class="ios-tab-item ${currentRoute === 'pengelola' ? 'active' : ''}" data-route="pengelola">
+          <span class="ios-tab-icon">👷‍♂️</span>
+          <span class="ios-tab-label">Pengelola</span>
+        </a>
+        <a href="#relawan" class="ios-tab-item ${currentRoute === 'relawan' ? 'active' : ''}" data-route="relawan">
+          <span class="ios-tab-icon">🤝</span>
+          <span class="ios-tab-label">Relawan</span>
+        </a>
+        <a href="#donatur" class="ios-tab-item ${currentRoute === 'donatur' ? 'active' : ''}" data-route="donatur">
+          <span class="ios-tab-icon">💚</span>
+          <span class="ios-tab-label">Donatur</span>
+        </a>
+        <a href="#admin" class="ios-tab-item ${currentRoute === 'admin' ? 'active' : ''}" data-route="admin">
+          <span class="ios-tab-icon">👑</span>
+          <span class="ios-tab-label">Admin</span>
+        </a>
+      </div>
+    </nav>
   `;
 }
 
