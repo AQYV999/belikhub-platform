@@ -208,10 +208,14 @@ export function attachWargaListeners(container) {
         return b;
       });
 
-      // Also increment village finance collected
+      // Also increment village finance collected and dynamically recalculate collectionRate
+      const newCollected = state.villageFinances.totalCollected + 20000;
+      const newRate = Math.min(100, Math.round((newCollected / state.villageFinances.totalTarget) * 100));
+
       const fin = {
         ...state.villageFinances,
-        totalCollected: state.villageFinances.totalCollected + 20000,
+        totalCollected: newCollected,
+        collectionRate: newRate,
         maintenanceFundBalance: state.villageFinances.maintenanceFundBalance + 20000
       };
 

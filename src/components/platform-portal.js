@@ -104,4 +104,11 @@ export function mountPlatformPortal(container) {
   window.addEventListener('belikhub:close-role', () => {
     updateStore({ activeRole: null });
   });
+
+  // Keyboard dismissal (Escape key)
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && getStore().activeRole) {
+      updateStore({ activeRole: null });
+    }
+  });
 }

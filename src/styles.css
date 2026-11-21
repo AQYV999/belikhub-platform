@@ -730,3 +730,40 @@ p {
   flex-wrap: wrap;
   gap: 1rem;
 }
+
+/* ==========================================================================
+   Mobile & Responsive Polish Fixes (Review Remediations)
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .hide-mobile {
+    display: none !important;
+  }
+
+  .platform-modal-overlay {
+    padding: 0.5rem;
+  }
+
+  .modal-body {
+    padding: 1.25rem 1rem;
+  }
+
+  .solutions-grid, .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 840px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-cta .btn-secondary {
+    display: none;
+  }
+
+  .nav-cta .btn-primary {
+    padding: 0.5rem 0.875rem;
+    font-size: 0.75rem;
+  }
+}
