@@ -2,13 +2,13 @@
   "name": "belikhub-platform",
   "version": "2.1.0",
   "private": true,
-  "description": "BelikHub community water restoration platform - Vercel + Firebase",
+  "description": "BelikHub community water restoration platform - Conrad Challenge & Samara Editorial",
   "type": "module",
   "scripts": {
-    "dev": "vercel dev",
-    "build": "echo \"static site, no build step\"",
-    "start": "vercel dev",
-    "deploy": "vercel --prod",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node --test tests/*.test.js",
     "lint": "eslint api lib"
   },
   "engines": {
@@ -20,6 +20,7 @@
   "devDependencies": {
     "@eslint/js": "^9.15.0",
     "eslint": "^9.15.0",
-    "vercel": "^39.0.0"
+    "vercel": "^39.0.0",
+    "vite": "^5.4.11"
   }
 }
