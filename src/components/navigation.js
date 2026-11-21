@@ -40,12 +40,12 @@ export function renderNavigation(currentRoute = 'warga') {
         </nav>
 
         <!-- Right Side: Secondary Info & Toggle Menu -->
-        <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0;">
           <div class="nav-item-dropdown">
-            <button class="apple-button-secondary" style="padding: 0.45rem 0.85rem; font-size: 0.8125rem; border-radius: 10px; display: flex; align-items: center; gap: 0.35rem;">
+            <button type="button" class="apple-button-secondary dropdown-toggle-btn" id="btn-doc-dropdown" style="padding: 0.4rem 0.75rem; font-size: 0.8125rem; border-radius: 10px; display: flex; align-items: center; gap: 0.35rem; cursor: pointer;">
               <span>Dokumentasi</span> ▾
             </button>
-            <div class="nav-dropdown-menu" style="right: 0; left: auto;">
+            <div class="nav-dropdown-menu" id="doc-dropdown-menu" style="right: 0; left: auto;">
               <a href="#home" class="dropdown-item" data-route="home">
                 <div class="dropdown-item-title">Ringkasan Proyek</div>
                 <div class="dropdown-item-desc">Halaman publik riset & inisiatif BelikHub</div>
@@ -65,7 +65,7 @@ export function renderNavigation(currentRoute = 'warga') {
             </div>
           </div>
 
-          <a href="#partner" class="apple-button-primary" data-route="partner" style="padding: 0.45rem 0.95rem; font-size: 0.8125rem; text-decoration: none;">
+          <a href="#partner" class="apple-button-primary hide-mobile" data-route="partner" style="padding: 0.4rem 0.85rem; font-size: 0.8125rem; text-decoration: none; border-radius: 10px; white-space: nowrap;">
             Partner with us
           </a>
         </div>
@@ -94,9 +94,26 @@ export function mountNavigation(container, onNavigate) {
   }
 
   function attachListeners() {
+    // Dropdown toggle click for touch screens and mobile
+    const toggleBtn = container.querySelector('#btn-doc-dropdown');
+    const dropdownMenu = container.querySelector('#doc-dropdown-menu');
+    if (toggleBtn && dropdownMenu) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('show');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!container.contains(e.target)) {
+          dropdownMenu.classList.remove('show');
+        }
+      });
+    }
+
     container.querySelectorAll('[data-route]').forEach(link => {
       link.addEventListener('click', (e) => {
         const route = link.getAttribute('data-route');
+        if (dropdownMenu) dropdownMenu.classList.remove('show');
         if (onNavigate) {
           onNavigate(route);
         }

@@ -552,8 +552,9 @@ p {
 }
 
 .nav-item-dropdown:hover .nav-dropdown-menu,
-.nav-item-dropdown:focus-within .nav-dropdown-menu {
-  display: flex;
+.nav-item-dropdown:focus-within .nav-dropdown-menu,
+.nav-dropdown-menu.show {
+  display: flex !important;
 }
 
 .dropdown-item {
@@ -969,6 +970,31 @@ p {
 
   .nav-logo span:last-child {
     display: none;
+  }
+
+  .nav-logo svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .nav-logo div:first-child {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .role-nav-scroll-wrapper {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .nav-role-tab {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.75rem;
+  }
+
+  .nav-item-dropdown button {
+    padding: 0.35rem 0.55rem !important;
+    font-size: 0.75rem !important;
   }
 }
 
