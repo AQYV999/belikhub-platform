@@ -1,8 +1,7 @@
 import { getStore, updateStore, resetStore, subscribeStore } from '../store.js';
 
 export function renderDemoBar() {
-  const state = getStore();
-  const currentRole = state.activeRole;
+  const currentHash = (typeof window !== 'undefined' ? window.location.hash.replace(/^#/, '') : '') || 'home';
 
   return `
     <div class="demo-bar" id="demo-bar-inner">
@@ -10,25 +9,29 @@ export function renderDemoBar() {
         <span class="demo-badge">Conrad Challenge Demo</span>
         <span style="opacity: 0.7; font-size: 0.75rem;" class="hide-mobile">Pilih Peran:</span>
         <div class="demo-roles">
-          <button class="role-btn ${currentRole === 'warga' ? 'active' : ''}" data-role="warga">
+          <a href="#warga" class="role-btn ${currentHash === 'warga' ? 'active' : ''}" data-role="warga">
             👨‍🌾 Warga
-          </button>
-          <button class="role-btn ${currentRole === 'pengelola' ? 'active' : ''}" data-role="pengelola">
+          </a>
+          <a href="#pengelola" class="role-btn ${currentHash === 'pengelola' ? 'active' : ''}" data-role="pengelola">
             👷‍♂️ Pengelola
-          </button>
-          <button class="role-btn ${currentRole === 'relawan' ? 'active' : ''}" data-role="relawan">
+          </a>
+          <a href="#relawan" class="role-btn ${currentHash === 'relawan' ? 'active' : ''}" data-role="relawan">
             🤝 Relawan
-          </button>
-          <button class="role-btn ${currentRole === 'donatur' ? 'active' : ''}" data-role="donatur">
+          </a>
+          <a href="#donatur" class="role-btn ${currentHash === 'donatur' ? 'active' : ''}" data-role="donatur">
             💚 Donatur
-          </button>
-          <button class="role-btn ${currentRole === 'admin' ? 'active' : ''}" data-role="admin">
+          </a>
+          <a href="#admin" class="role-btn ${currentHash === 'admin' ? 'active' : ''}" data-role="admin">
             👑 Admin
-          </button>
+          </a>
         </div>
       </div>
       <div class="demo-bar-right">
-        ${currentRole ? `<button class="role-btn" id="btn-close-role" style="background: rgba(255,255,255,0.18);">✕ Tutup Portal</button>` : ''}
+        ${['warga', 'pengelola', 'relawan', 'donatur', 'admin'].includes(currentHash) ? `
+          <a href="#home" class="role-btn" style="background: rgba(255,255,255,0.18);">
+            🏠 Kembali ke Web Artikel
+          </a>
+        ` : ''}
         <button class="reset-btn" id="btn-reset-demo" title="Kembalikan data simulasi ke setelan awal pabrik">
           ↺ Reset Data Demo
         </button>
@@ -50,19 +53,9 @@ export function mountDemoBar(container) {
     roleBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const role = btn.getAttribute('data-role');
-        updateStore({ activeRole: role });
-        // dispatch custom event to open platform modal
-        window.dispatchEvent(new CustomEvent('belikhub:open-role', { detail: { role } }));
+        window.location.hash = role;
       });
     });
-
-    const closeBtn = container.querySelector('#btn-close-role');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => {
-        updateStore({ activeRole: null });
-        window.dispatchEvent(new CustomEvent('belikhub:close-role'));
-      });
-    }
 
     const resetBtn = container.querySelector('#btn-reset-demo');
     if (resetBtn) {
@@ -77,4 +70,5 @@ export function mountDemoBar(container) {
 
   update();
   subscribeStore(update);
+  window.addEventListener('hashchange', update);
 }

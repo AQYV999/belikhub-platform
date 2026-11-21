@@ -6,6 +6,12 @@ import { renderHomePage } from './pages/home.js';
 import { renderSolutionsPage } from './pages/solutions.js';
 import { renderProjectsPage } from './pages/projects.js';
 import { renderAboutPage } from './pages/about.js';
+import { renderWargaView, attachWargaListeners } from './components/roles/warga.js';
+import { renderPengelolaView, attachPengelolaListeners } from './components/roles/pengelola.js';
+import { renderRelawanView, attachRelawanListeners } from './components/roles/relawan.js';
+import { renderDonaturView, attachDonaturListeners } from './components/roles/donatur.js';
+import { renderAdminView, attachAdminListeners } from './components/roles/admin.js';
+import { subscribeStore } from './store.js';
 
 // Application Router
 function router() {
@@ -28,6 +34,21 @@ function router() {
     appContainer.innerHTML = renderProjectsPage();
   } else if (hash === 'about') {
     appContainer.innerHTML = renderAboutPage();
+  } else if (hash === 'warga') {
+    appContainer.innerHTML = renderWargaView();
+    attachWargaListeners(appContainer);
+  } else if (hash === 'pengelola') {
+    appContainer.innerHTML = renderPengelolaView();
+    attachPengelolaListeners(appContainer);
+  } else if (hash === 'relawan') {
+    appContainer.innerHTML = renderRelawanView();
+    attachRelawanListeners(appContainer);
+  } else if (hash === 'donatur') {
+    appContainer.innerHTML = renderDonaturView();
+    attachDonaturListeners(appContainer);
+  } else if (hash === 'admin') {
+    appContainer.innerHTML = renderAdminView();
+    attachAdminListeners(appContainer);
   } else if (hash === 'partner') {
     appContainer.innerHTML = `
       <main class="section" style="min-height: 80vh; display: flex; align-items: center;">
@@ -38,7 +59,7 @@ function router() {
             Mari berkolaborasi memulihkan ekosistem mata air di Kabupaten Batang bersama BUMDes Tirta dan PDAM Kabupaten Batang.
           </p>
 
-          <form onsubmit="event.preventDefault(); alert('Terima kasih! Tim kemitraan BelikHub & PDAM Batang akan segera menghubungi Anda.'); window.location.hash = 'home';" style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 2.5rem; display: flex; flex-direction: column; gap: 1.25rem;">
+          <form onsubmit="event.preventDefault(); alert('Terima kasih! Tim kemitraan BelikHub & PDAM Batang akan segera menghubungi Anda.'); window.location.hash = 'home';" style="background: #FFFFFF; border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 2.5rem; display: flex; flex-direction: column; gap: 1.25rem; box-shadow: var(--shadow-subtle);">
             <div class="form-group">
               <label class="form-label">Nama Lengkap / Instansi</label>
               <input type="text" class="form-input" placeholder="Nama organisasi, instansi pemerintah, atau korporasi" required>
@@ -92,6 +113,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentHash = window.location.hash.replace(/^#/, '') || 'home';
     if (nav && nav.render) {
       nav.render(currentHash);
+    }
+  });
+
+  // Re-render full-page dashboard if store updates while on a role page
+  subscribeStore(() => {
+    const hash = window.location.hash.replace(/^#/, '');
+    if (['warga', 'pengelola', 'relawan', 'donatur', 'admin'].includes(hash)) {
+      router();
     }
   });
 

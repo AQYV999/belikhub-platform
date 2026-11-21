@@ -1,4 +1,6 @@
 export function renderNavigation(currentRoute = 'home') {
+  const isPortal = ['warga', 'pengelola', 'relawan', 'donatur', 'admin'].includes(currentRoute);
+
   return `
     <header class="main-header">
       <div class="container nav-container">
@@ -35,13 +37,42 @@ export function renderNavigation(currentRoute = 'home') {
             <li>
               <a href="#about" class="nav-link ${currentRoute === 'about' ? 'active' : ''}" data-route="about">About</a>
             </li>
+            
+            <!-- Dedicated Full-Page 5 Roles Dropdown / Menu -->
+            <li class="nav-item-dropdown">
+              <a href="#warga" class="nav-link ${isPortal ? 'active' : ''}" data-route="warga" style="${isPortal ? 'color: var(--color-evergreen); font-weight: 600;' : ''}">
+                Portals (5 Peran) ▾
+              </a>
+              <div class="nav-dropdown-menu">
+                <a href="#warga" class="dropdown-item" data-route="warga">
+                  <div class="dropdown-item-title">👨‍🌾 Portal Warga Desa</div>
+                  <div class="dropdown-item-desc">Telemetri Tuk Bismo, Pass Iuran QRIS & Lapor Pipa Bocor</div>
+                </a>
+                <a href="#pengelola" class="dropdown-item" data-route="pengelola">
+                  <div class="dropdown-item-title">👷‍♂️ Portal Pengelola BUMDes</div>
+                  <div class="dropdown-item-desc">Collection Rate, Catat Meteran & Kas Desa</div>
+                </a>
+                <a href="#relawan" class="dropdown-item" data-route="relawan">
+                  <div class="dropdown-item-title">🤝 Portal Relawan Lapangan</div>
+                  <div class="dropdown-item-desc">Inspeksi Patroli 4 Kategori & Validasi GPS</div>
+                </a>
+                <a href="#donatur" class="dropdown-item" data-route="donatur">
+                  <div class="dropdown-item-title">💚 Portal Donasi & CSR</div>
+                  <div class="dropdown-item-desc">Katalog Restorasi, Checkout Donasi & Sertifikat</div>
+                </a>
+                <a href="#admin" class="dropdown-item" data-route="admin">
+                  <div class="dropdown-item-title">👑 Portal Admin PDAM Batang</div>
+                  <div class="dropdown-item-desc">Macro Dashboard 4 Mata Air & Antrean Verifikasi 3 Jalur</div>
+                </a>
+              </div>
+            </li>
           </ul>
         </nav>
 
         <div class="nav-cta">
-          <button class="btn btn-secondary" id="nav-btn-open-portal" style="padding: 0.6rem 1.1rem; font-size: 0.8125rem;">
-            ⚡ Buka Portal Demo
-          </button>
+          <a href="#warga" class="btn btn-secondary" data-route="warga" style="padding: 0.6rem 1.1rem; font-size: 0.8125rem;">
+            ⚡ Buka Dashboard
+          </a>
           <a href="#partner" class="btn btn-primary" data-route="partner" style="padding: 0.6rem 1.25rem; font-size: 0.8125rem;">
             Partner with us
           </a>
@@ -68,13 +99,6 @@ export function mountNavigation(container, onNavigate) {
         }
       });
     });
-
-    const openPortalBtn = container.querySelector('#nav-btn-open-portal');
-    if (openPortalBtn) {
-      openPortalBtn.addEventListener('click', () => {
-        window.dispatchEvent(new CustomEvent('belikhub:open-role', { detail: { role: 'warga' } }));
-      });
-    }
   }
 
   render('home');
