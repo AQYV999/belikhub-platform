@@ -217,13 +217,14 @@ p {
 
 /* Floating Demo Switcher Bar */
 .demo-bar {
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
   height: var(--demo-bar-height);
-  background: rgba(38, 38, 38, 0.96);
+  background: rgba(38, 38, 38, 0.98);
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: #FFFFFF;
   z-index: 1000;
   display: flex;
