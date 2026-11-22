@@ -4,13 +4,10 @@ export function renderDemoBar() {
   const currentHash = (typeof window !== 'undefined' ? window.location.hash.replace(/^#/, '') : '') || 'warga';
 
   return `
-    <div class="demo-bar" id="demo-bar-inner">
+    <div class="demo-bar" id="demo-bar-inner" style="display: none;" aria-hidden="true">
       <div class="demo-bar-left">
         <span class="demo-badge">Conrad Demo</span>
-        <button type="button" class="role-btn show-mobile-only" id="btn-demo-switch-role" style="background: rgba(255, 255, 255, 0.14); padding: 0.2rem 0.55rem; font-size: 0.75rem; border-radius: 6px;">
-          Ganti Peran ▾
-        </button>
-        <div class="demo-roles hide-mobile">
+        <div class="demo-roles">
           <a href="#warga" class="role-btn ${currentHash === 'warga' ? 'active' : ''}" data-role="warga">
             👨‍🌾 Warga
           </a>
@@ -30,7 +27,7 @@ export function renderDemoBar() {
       </div>
       <div class="demo-bar-right">
         <button class="reset-btn" id="btn-reset-demo" title="Kembalikan data simulasi ke setelan awal pabrik">
-          ↺ Reset Demo
+          ↺ Reset Data Demo
         </button>
       </div>
 

@@ -357,26 +357,9 @@ p {
   color: #FFFFFF;
 }
 
-/* Sticky Demo Bar (Apple Style Translucent Chrome) */
+/* Sticky Demo Bar (Hidden for clean single navbar) */
 .demo-bar {
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
-  min-height: var(--demo-bar-height);
-  background: rgba(15, 23, 42, 0.94);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  color: #FFFFFF;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.35rem 1rem;
-  font-size: 0.8125rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  display: none !important;
 }
 
 .demo-bar::-webkit-scrollbar {
@@ -472,7 +455,7 @@ p {
 /* Apple Navigation Bar (Glass Surface with Translucency) */
 .main-header {
   position: sticky;
-  top: var(--demo-bar-height);
+  top: 0;
   left: 0;
   right: 0;
   height: var(--header-height);
