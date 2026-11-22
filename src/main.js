@@ -15,11 +15,25 @@ import { renderAdminView, attachAdminListeners } from './components/roles/admin.
 import { renderLoginPage, attachLoginListeners } from './pages/login.js';
 import { subscribeStore } from './store.js';
 
+// Track current subtab per role
+let roleSubTabs = {
+  warga: 'retribusi',
+  pengelola: 'beranda',
+  relawan: 'mata-air',
+  donatur: 'program',
+  admin: 'ringkasan'
+};
+
 // Application Router
-function router() {
+function router(customSubTab = '') {
   const hash = window.location.hash.replace(/^#/, '') || 'warga';
   const appContainer = document.getElementById('app');
   if (!appContainer) return;
+
+  if (customSubTab && roleSubTabs[hash] !== undefined) {
+    roleSubTabs[hash] = customSubTab;
+  }
+  const activeSubTab = roleSubTabs[hash] || '';
 
   if (hash === 'home' || hash === '') {
     appContainer.innerHTML = renderHomePage();
@@ -37,19 +51,19 @@ function router() {
   } else if (hash === 'about') {
     appContainer.innerHTML = renderAboutPage();
   } else if (hash === 'warga') {
-    appContainer.innerHTML = renderWargaView();
+    appContainer.innerHTML = renderWargaView(activeSubTab || 'retribusi');
     attachWargaListeners(appContainer);
   } else if (hash === 'pengelola') {
-    appContainer.innerHTML = renderPengelolaView();
+    appContainer.innerHTML = renderPengelolaView(activeSubTab || 'beranda');
     attachPengelolaListeners(appContainer);
   } else if (hash === 'relawan') {
-    appContainer.innerHTML = renderRelawanView();
+    appContainer.innerHTML = renderRelawanView(activeSubTab || 'mata-air');
     attachRelawanListeners(appContainer);
   } else if (hash === 'donatur') {
-    appContainer.innerHTML = renderDonaturView();
+    appContainer.innerHTML = renderDonaturView(activeSubTab || 'program');
     attachDonaturListeners(appContainer);
   } else if (hash === 'admin') {
-    appContainer.innerHTML = renderAdminView();
+    appContainer.innerHTML = renderAdminView(activeSubTab || 'ringkasan');
     attachAdminListeners(appContainer);
   } else if (hash === 'login' || hash === 'masuk') {
     appContainer.innerHTML = renderLoginPage();
@@ -117,11 +131,25 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.hash = selectedRole;
   });
 
+  // Listen to subtab changes from both desktop and mobile bottom bar
+  window.addEventListener('belikhub:subtab-change', (e) => {
+    const currentHash = window.location.hash.replace(/^#/, '') || 'warga';
+    const subtab = e.detail?.subtab;
+    if (subtab && roleSubTabs[currentHash] !== undefined) {
+      roleSubTabs[currentHash] = subtab;
+      router(subtab);
+      if (nav && nav.render) {
+        nav.render(currentHash, subtab);
+      }
+    }
+  });
+
   window.addEventListener('hashchange', () => {
     const currentHash = window.location.hash.replace(/^#/, '') || 'warga';
-    router();
+    const subtab = roleSubTabs[currentHash] || '';
+    router(subtab);
     if (nav && nav.render) {
-      nav.render(currentHash);
+      nav.render(currentHash, subtab);
     }
   });
 
@@ -133,5 +161,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  router();
+  const initialHash = window.location.hash.replace(/^#/, '') || 'warga';
+  router(roleSubTabs[initialHash] || '');
 });

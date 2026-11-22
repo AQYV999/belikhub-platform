@@ -1,4 +1,6 @@
-export function renderNavigation(currentRoute = 'warga') {
+import { ROLE_SUBTABS } from './role-tabs.js';
+
+export function renderNavigation(currentRoute = 'warga', currentSubTab = '') {
   const isPortal = ['warga', 'pengelola', 'relawan', 'donatur', 'admin'].includes(currentRoute);
 
   const roleLabels = {
@@ -100,43 +102,35 @@ export function renderNavigation(currentRoute = 'warga') {
       </div>
     </header>
 
-    <!-- iOS Native Style Bottom Tab Bar (Mobile & WASM Thumb Navigation) -->
-    <nav class="ios-bottom-tab-bar show-mobile-only" aria-label="Mobile Navigation">
-      <div class="ios-tab-bar-container">
-        <a href="#warga" class="ios-tab-item ${currentRoute === 'warga' ? 'active' : ''}" data-route="warga">
-          <span class="ios-tab-icon">👨‍🌾</span>
-          <span class="ios-tab-label">Warga</span>
-        </a>
-        <a href="#pengelola" class="ios-tab-item ${currentRoute === 'pengelola' ? 'active' : ''}" data-route="pengelola">
-          <span class="ios-tab-icon">👷‍♂️</span>
-          <span class="ios-tab-label">Pengelola</span>
-        </a>
-        <a href="#relawan" class="ios-tab-item ${currentRoute === 'relawan' ? 'active' : ''}" data-route="relawan">
-          <span class="ios-tab-icon">🤝</span>
-          <span class="ios-tab-label">Relawan</span>
-        </a>
-        <a href="#donatur" class="ios-tab-item ${currentRoute === 'donatur' ? 'active' : ''}" data-route="donatur">
-          <span class="ios-tab-icon">💚</span>
-          <span class="ios-tab-label">Donatur</span>
-        </a>
-        <a href="#admin" class="ios-tab-item ${currentRoute === 'admin' ? 'active' : ''}" data-route="admin">
-          <span class="ios-tab-icon">👑</span>
-          <span class="ios-tab-label">Admin</span>
-        </a>
+    <!-- iOS Native Style Bottom Tab Bar (Mobile & WASM Dynamic Role Sub-Tabs) -->
+    <nav class="ios-bottom-tab-bar" id="mobile-role-tab-bar" aria-label="Mobile Role Navigation">
+      <div class="ios-tab-bar-container" id="mobile-role-tab-items">
+        ${((ROLE_SUBTABS[currentRoute] || ROLE_SUBTABS.warga)).map(tab => {
+          const isActive = (currentSubTab === tab.id) || (!currentSubTab && tab.id === (ROLE_SUBTABS[currentRoute] || ROLE_SUBTABS.warga)[0].id);
+          return `
+            <button type="button" class="ios-tab-item ${isActive ? 'active' : ''}" data-subtab="${tab.id}">
+              <span class="ios-tab-icon">${tab.icon}</span>
+              <span class="ios-tab-label">${tab.title}</span>
+            </button>
+          `;
+        }).join('')}
       </div>
     </nav>
   `;
 }
 
-export function mountNavigation(container, onNavigate) {
+export function mountNavigation(container, onNavigate, onSubTabChange) {
   if (!container) return;
 
-  function render(route) {
-    container.innerHTML = renderNavigation(route);
-    attachListeners();
+  let currentSubTab = '';
+
+  function render(route, subTab = '') {
+    if (subTab) currentSubTab = subTab;
+    container.innerHTML = renderNavigation(route, currentSubTab);
+    attachListeners(route);
   }
 
-  function attachListeners() {
+  function attachListeners(route) {
     // Dropdown toggle click for touch screens and mobile
     const toggleBtn = container.querySelector('#btn-doc-dropdown');
     const dropdownMenu = container.querySelector('#doc-dropdown-menu');
@@ -161,17 +155,29 @@ export function mountNavigation(container, onNavigate) {
       });
     }
 
+    // Bottom Sub-Tab Buttons click
+    container.querySelectorAll('.ios-tab-item[data-subtab]').forEach(tabBtn => {
+      tabBtn.addEventListener('click', () => {
+        const subtab = tabBtn.getAttribute('data-subtab');
+        currentSubTab = subtab;
+        render(route, subtab);
+        if (onSubTabChange) onSubTabChange(subtab);
+        window.dispatchEvent(new CustomEvent('belikhub:subtab-change', { detail: { subtab } }));
+      });
+    });
+
     container.querySelectorAll('[data-route]').forEach(link => {
       link.addEventListener('click', (e) => {
-        const route = link.getAttribute('data-route');
+        const targetRoute = link.getAttribute('data-route');
         if (dropdownMenu) dropdownMenu.classList.remove('show');
+        currentSubTab = '';
         if (onNavigate) {
-          onNavigate(route);
+          onNavigate(targetRoute);
         }
       });
     });
   }
 
-  render('home');
+  render('warga');
   return { render };
 }

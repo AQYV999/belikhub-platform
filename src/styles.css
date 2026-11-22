@@ -1448,5 +1448,74 @@ p {
   to { transform: translateY(0) scale(1); opacity: 1; }
 }
 
+/* ==========================================================================
+   Role Sub-Tabs Navigation (Desktop Segmented Bar & Subtab Panels)
+   ========================================================================== */
+.subtab-panel {
+  display: none;
+}
+
+.subtab-panel.active {
+  display: block;
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.desktop-subtabs-bar {
+  display: flex;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 4px;
+  border-radius: 12px;
+  gap: 4px;
+  margin-bottom: 2rem;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.desktop-subtab-btn {
+  flex: 1;
+  min-width: 110px;
+  padding: 0.55rem 1rem;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--apple-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.desktop-subtab-btn:hover {
+  color: var(--apple-text-primary);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.desktop-subtab-btn.active {
+  background: #FFFFFF;
+  color: var(--apple-text-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+/* Hide desktop subtabs bar on small screens if bottom tab bar is active */
+@media (max-width: 768px) {
+  .desktop-subtabs-bar {
+    display: flex;
+    overflow-x: auto;
+  }
+}
+
+
 
 

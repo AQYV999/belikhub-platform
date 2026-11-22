@@ -1,224 +1,254 @@
 import { getStore, updateStore } from '../../store.js';
 
-export function renderWargaView() {
+export function renderWargaView(activeSubTab = 'retribusi') {
   const state = getStore();
   const spring = state.springs.find(s => s.id === 'sp_bismo') || state.springs[0];
   const user = state.currentUser;
   const currentBill = state.bills.find(b => b.period === 'November 2026') || state.bills[0];
 
   return `
-    <div class="role-view warga-view container" style="padding-top: 1.5rem; padding-bottom: 4rem;">
-      <!-- Apple Health View Header -->
-      <div style="margin-bottom: 2rem;">
-        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-          <span class="eyebrow" style="margin-bottom: 0;">Portal Warga Desa</span>
-          <span style="color: var(--apple-text-muted);">•</span>
-          <span style="font-size: 0.8125rem; color: var(--apple-text-secondary);">${user.village}</span>
-        </div>
-        <h1 style="font-size: clamp(2rem, 3.5vw, 2.75rem); letter-spacing: -0.03em;">${user.name}</h1>
-        <p class="text-muted" style="margin-top: 0.25rem;">ID Sambungan: <strong>${user.linkedMeterCode}</strong> • Kartu Keluarga: <strong>${user.householdId}</strong></p>
+    <div class="role-view warga-view container" style="padding-top: 1.5rem; padding-bottom: 5rem;">
+      
+      <!-- Role Sub-Tabs Header (Visible on Desktop / Web) -->
+      <div class="desktop-subtabs-bar">
+        <button type="button" class="desktop-subtab-btn ${activeSubTab === 'retribusi' ? 'active' : ''}" data-target-subtab="retribusi">
+          💳 Retribusi
+        </button>
+        <button type="button" class="desktop-subtab-btn ${activeSubTab === 'mata-air' ? 'active' : ''}" data-target-subtab="mata-air">
+          💧 Mata Air
+        </button>
+        <button type="button" class="desktop-subtab-btn ${activeSubTab === 'laporan' ? 'active' : ''}" data-target-subtab="laporan">
+          📝 Laporan
+        </button>
+        <button type="button" class="desktop-subtab-btn ${activeSubTab === 'profil' ? 'active' : ''}" data-target-subtab="profil">
+          👤 Profil
+        </button>
       </div>
 
-      <!-- Apple Health Big Metric Hero Widget (Tuk Bismo Discharge) -->
-      <div class="apple-inset-group" style="padding: 2rem; margin-bottom: 2rem;">
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
-          <div>
-            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.25rem;">
-              <span class="pulsing-dot emerald"></span>
-              <span style="font-size: 0.8125rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-emerald);">Telemetri Lapangan Aktif</span>
+      <!-- TAB 1: RETRIBUSI -->
+      <div class="subtab-panel ${activeSubTab === 'retribusi' ? 'active' : ''}" id="warga-tab-retribusi">
+        <div class="apple-section-header">Digital Pass Retribusi Air & Pembayaran Warga</div>
+        <div class="apple-inset-group" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <span style="font-size: 0.75rem; color: var(--apple-text-secondary); text-transform: uppercase; font-weight: 700;">Periode Iuran</span>
+              <div style="font-size: 1.35rem; font-weight: 800; color: var(--apple-text-primary); margin-top: 2px;">${currentBill.period}</div>
+              <span style="font-size: 0.8125rem; color: var(--apple-text-secondary);">${currentBill.usageM3 || 16} m³ kubikasi terpakai bulan ini</span>
             </div>
-            <h2 style="font-size: 1.5rem; letter-spacing: -0.02em;">Sumber Air: ${spring.name}</h2>
-          </div>
-          <div style="display: flex; align-items: center; gap: 0.5rem; background: var(--apple-emerald-surface); padding: 0.4rem 0.85rem; border-radius: var(--radius-full);">
-            <span class="pulsing-dot emerald"></span>
-            <span style="font-size: 0.75rem; font-weight: 700; color: var(--apple-emerald); text-transform: uppercase;">Sensor Normal (${spring.sensorUptime}% Uptime)</span>
-          </div>
-        </div>
-
-        <!-- Big Metric Displays -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--apple-hairline);">
-          <div>
-            <span style="font-size: 0.8125rem; color: var(--apple-text-secondary); font-weight: 500; display: block; margin-bottom: 0.25rem;">Debit Aliran Terkini</span>
-            <div class="apple-stat-big" style="color: var(--apple-emerald);">
-              ${spring.currentDischarge}
-              <span class="apple-stat-unit">L/detik</span>
+            <div style="text-align: right;">
+              <div class="apple-stat-big" style="font-size: 2rem;">Rp ${(currentBill.amount).toLocaleString('id-ID')}</div>
+              <span style="display: inline-block; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: var(--radius-full); ${currentBill.status === 'paid' ? 'background: var(--apple-emerald-surface); color: var(--apple-emerald);' : 'background: var(--apple-rose-subtle); color: var(--apple-rose);'}">
+                ${currentBill.status === 'paid' ? '✓ Lunas Terbayar' : '● Belum Lunas'}
+              </span>
             </div>
-            <span style="font-size: 0.75rem; color: var(--apple-text-muted); margin-top: 0.25rem; display: block;">Kapasitas baseline ${spring.baselineDischarge} L/s</span>
           </div>
 
-          <div>
-            <span style="font-size: 0.8125rem; color: var(--apple-text-secondary); font-weight: 500; display: block; margin-bottom: 0.25rem;">Kapasitas Akuifer</span>
-            <div class="apple-stat-big">
-              ${spring.capacityPercent}
-              <span class="apple-stat-unit">%</span>
-            </div>
-            <span style="font-size: 0.75rem; color: var(--apple-text-muted); margin-top: 0.25rem; display: block;">Resapan sabuk hijau stabil</span>
-          </div>
-
-          <div>
-            <span style="font-size: 0.8125rem; color: var(--apple-text-secondary); font-weight: 500; display: block; margin-bottom: 0.25rem;">Cakupan Sambungan</span>
-            <div class="apple-stat-big">
-              ${spring.servedHouseholds}
-              <span class="apple-stat-unit">KK</span>
-            </div>
-            <span style="font-size: 0.75rem; color: var(--apple-text-muted); margin-top: 0.25rem; display: block;">Elevasi ${spring.elevation}</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Two Column Layout: Grouped Inset Style -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 2rem;">
-        
-        <!-- Left: Digital Pass Retribusi -->
-        <div>
-          <div class="apple-cell-header">Tagihan Iuran & Pembayaran</div>
-          <div class="apple-inset-group">
-            <div class="apple-cell" style="background: var(--apple-card);">
+          ${currentBill.status !== 'paid' ? `
+            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--apple-hairline); text-align: center;">
+              <span style="font-size: 0.8125rem; font-weight: 600; color: var(--apple-text-secondary); display: block; margin-bottom: 0.75rem;">Scan QRIS Resmi BUMDes Desa Bismo:</span>
+              <div style="display: inline-block; background: #FFFFFF; padding: 0.75rem; border-radius: 12px; border: 1px solid var(--apple-hairline); box-shadow: var(--shadow-subtle); margin-bottom: 1rem;">
+                <div style="width: 140px; height: 140px; background: #0F172A; border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #FFFFFF; padding: 0.5rem;">
+                  <span style="font-size: 0.625rem; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">QRIS RETRIBUSI</span>
+                  <div style="width: 80px; height: 80px; background: #FFFFFF; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; padding: 4px;">
+                    <div style="background: #000;"></div><div style="background: #FFF;"></div><div style="background: #000;"></div>
+                    <div style="background: #FFF;"></div><div style="background: #000;"></div><div style="background: #FFF;"></div>
+                    <div style="background: #000;"></div><div style="background: #FFF;"></div><div style="background: #000;"></div>
+                  </div>
+                  <span style="font-size: 0.6rem; color: #94A3B8; margin-top: 0.25rem;">NMID: ID102938481</span>
+                </div>
+              </div>
               <div>
-                <span style="font-size: 0.75rem; color: var(--apple-text-secondary); text-transform: uppercase; font-weight: 600;">Periode Iuran</span>
-                <div style="font-size: 1.125rem; font-weight: 700; color: var(--apple-text-primary);">${currentBill.period}</div>
-                <span style="font-size: 0.8125rem; color: var(--apple-text-muted);">${currentBill.usageM3 || 16} m³ kubikasi terpakai</span>
+                <button type="button" id="btn-pay-qris" class="apple-button-primary" style="width: 100%; max-width: 320px; margin: 0 auto; padding: 0.85rem; font-size: 0.9375rem;">
+                  💳 Konfirmasi Bayar QRIS (Rp 20.000)
+                </button>
+              </div>
+            </div>
+          ` : `
+            <div style="margin-top: 1.5rem; padding: 1rem; background: var(--apple-emerald-surface); border-radius: 12px; display: flex; align-items: center; gap: 0.75rem;">
+              <span style="font-size: 1.5rem;">✅</span>
+              <div>
+                <strong style="color: var(--apple-emerald); font-size: 0.875rem; display: block;">Iuran Terverifikasi Lunas</strong>
+                <span style="font-size: 0.75rem; color: var(--apple-text-secondary);">Dibayar melalui ${currentBill.paymentMethod || 'QRIS'} pada ${new Date(currentBill.paidAt || Date.now()).toLocaleDateString('id-ID')}</span>
+              </div>
+            </div>
+          `}
+        </div>
+
+        <!-- Riwayat Pembayaran -->
+        <div class="apple-section-header">Riwayat Pembayaran Sebelumnya</div>
+        <div class="apple-inset-group">
+          ${state.bills.map(b => `
+            <div class="apple-cell">
+              <div>
+                <div style="font-weight: 600; font-size: 0.9375rem;">${b.period}</div>
+                <div style="font-size: 0.75rem; color: var(--apple-text-secondary); margin-top: 2px;">
+                  ${b.paymentMethod || 'Menunggu Pembayaran'}
+                </div>
               </div>
               <div style="text-align: right;">
-                <div class="apple-stat-big" style="font-size: 1.75rem;">Rp ${(currentBill.amount).toLocaleString('id-ID')}</div>
-                <span style="display: inline-block; font-size: 0.75rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: var(--radius-full); ${currentBill.status === 'paid' ? 'background: var(--apple-emerald-surface); color: var(--apple-emerald);' : 'background: var(--apple-rose-subtle); color: var(--apple-rose);'}">
-                  ${currentBill.status === 'paid' ? '✓ Lunas Terbayar' : '● Belum Lunas'}
+                <div style="font-weight: 700; font-size: 0.9375rem; font-variant-numeric: tabular-nums;">Rp ${(b.amount).toLocaleString('id-ID')}</div>
+                <span style="font-size: 0.6875rem; font-weight: 700; color: ${b.status === 'paid' ? 'var(--apple-emerald)' : 'var(--apple-rose)'};">
+                  ${b.status === 'paid' ? 'LUNAS' : 'BELUM BAYAR'}
                 </span>
               </div>
             </div>
-
-            ${currentBill.status !== 'paid' ? `
-              <div style="padding: 1.5rem; text-align: center; border-bottom: 1px solid var(--apple-hairline); background: #FAFBFD;">
-                <span style="font-size: 0.8125rem; font-weight: 600; color: var(--apple-text-secondary); display: block; margin-bottom: 0.75rem;">Scan QRIS Resmi Desa Bismo:</span>
-                <div style="display: inline-block; background: #FFFFFF; padding: 0.75rem; border-radius: var(--radius-sm); border: 1px solid var(--apple-hairline); box-shadow: var(--shadow-subtle); margin-bottom: 0.75rem;">
-                  <div style="width: 140px; height: 140px; background: #0F172A; border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #FFFFFF; padding: 0.5rem;">
-                    <span style="font-size: 0.625rem; font-weight: 700; letter-spacing: 0.05em; margin-bottom: 0.25rem;">QRIS RETRIBUSI</span>
-                    <div style="width: 90px; height: 90px; background: #FFFFFF; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; padding: 4px;">
-                      <div style="background: #000;"></div><div style="background: #FFF;"></div><div style="background: #000;"></div>
-                      <div style="background: #FFF;"></div><div style="background: #000;"></div><div style="background: #FFF;"></div>
-                      <div style="background: #000;"></div><div style="background: #FFF;"></div><div style="background: #000;"></div>
-                    </div>
-                    <span style="font-size: 0.5625rem; margin-top: 0.25rem;">NMID: ID1020261189</span>
-                  </div>
-                </div>
-                <p style="font-size: 0.75rem; color: var(--apple-text-muted);">Transfer Bank Jateng BUMDes: <strong>3-021-98765-1</strong></p>
-                <button class="btn btn-primary" id="btn-pay-qris" style="width: 100%; margin-top: 1rem;">
-                  Konfirmasi Pembayaran QRIS (Rp 20.000)
-                </button>
-              </div>
-            ` : `
-              <div class="apple-cell" style="background: var(--apple-emerald-surface);">
-                <div>
-                  <strong style="color: var(--apple-emerald); font-size: 0.875rem;">Tagihan Bulan Ini Sudah Lunas</strong>
-                  <span style="font-size: 0.75rem; color: var(--apple-text-secondary); display: block; margin-top: 0.15rem;">
-                    Dibayar pada ${new Date(currentBill.paidAt || Date.now()).toLocaleDateString('id-ID')} via ${currentBill.paymentMethod || 'QRIS'}
-                  </span>
-                </div>
-                <button class="btn btn-secondary" style="padding: 0.4rem 0.85rem; font-size: 0.75rem;" onclick="alert('Struk Resmi Retribusi Air Desa Bismo\\nNo Referensi: STRUK-${currentBill.id}\\nNominal: Rp ${(currentBill.amount).toLocaleString('id-ID')}\\nStatus: Terverifikasi BUMDes Tirta')">
-                  Lihat Struk
-                </button>
-              </div>
-            `}
-
-            <!-- Historical Bills in Inset List -->
-            <div class="apple-cell-header" style="background: var(--apple-canvas); border-top: 1px solid var(--apple-hairline); border-bottom: 1px solid var(--apple-hairline);">Riwayat Pembayaran Lampau</div>
-            ${state.bills.slice(1).map(b => `
-              <div class="apple-cell">
-                <div>
-                  <strong style="font-size: 0.875rem; display: block;">${b.period}</strong>
-                  <span style="font-size: 0.75rem; color: var(--apple-text-muted);">${b.paymentMethod || 'Lunas'} • ${b.usageM3 || 15} m³</span>
-                </div>
-                <div style="text-align: right;">
-                  <span style="font-weight: 700; color: var(--apple-emerald); font-size: 0.9375rem;">Rp ${(b.amount).toLocaleString('id-ID')}</span>
-                  <span style="font-size: 0.6875rem; color: var(--apple-text-muted); display: block;">REF-${b.id}</span>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-
-          <!-- Link Code Meteran -->
-          <div class="apple-cell-header">Tautkan Akun Meteran Baru</div>
-          <div class="apple-inset-group" style="padding: 1.25rem;">
-            <p style="font-size: 0.8125rem; color: var(--apple-text-secondary); margin-bottom: 0.75rem;">Hubungkan 6-digit Link Code yang tertera pada badan meteran air fisik.</p>
-            <div style="display: flex; gap: 0.5rem;">
-              <input type="text" id="input-link-code" placeholder="Misal: BSM-7721" class="form-input" style="font-size: 0.875rem; padding: 0.65rem 0.875rem;">
-              <button class="btn btn-secondary" id="btn-link-meter" style="padding: 0.65rem 1.25rem; font-size: 0.8125rem;">Tautkan</button>
-            </div>
-          </div>
+          `).join('')}
         </div>
-
-        <!-- Right: Formulir Lapor Pipa Bocor & Status -->
-        <div>
-          <div class="apple-cell-header">Pelaporan & Penanganan Masalah</div>
-          <div class="apple-inset-group" style="padding: 1.75rem;">
-            <div style="margin-bottom: 1.25rem;">
-              <h3 style="font-size: 1.1875rem; letter-spacing: -0.015em;">Formulir Lapor Kerusakan</h3>
-              <p class="text-muted" style="font-size: 0.8125rem; margin-top: 0.2rem;">Laporan Anda diteruskan langsung ke tim teknis perbaikan pipa BUMDes Tirta.</p>
-            </div>
-
-            <form id="form-warga-report" onsubmit="event.preventDefault();">
-              <div class="form-group">
-                <label for="warga-report-category" class="form-label">Kategori Gangguan</label>
-                <select id="warga-report-category" class="form-select">
-                  <option value="kebocoran">Pipa Bocor / Pecah di Jalur Transmisi</option>
-                  <option value="kotor">Air Keruh / Kotor / Berpasir</option>
-                  <option value="mati">Debit Air Mati / Aliran Terhenti</option>
-                  <option value="meteran">Meteran Air Rusak / Angka Tidak Berputar</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="warga-report-desc" class="form-label">Catatan Lokasi & Deskripsi</label>
-                <textarea id="warga-report-desc" class="form-textarea" rows="3" placeholder="Sebutkan lokasi spesifik (misal: tanjakan kebun teh RT 02) dan kondisi pipa..." required></textarea>
-              </div>
-
-              <div class="form-group">
-                <label for="warga-report-coords" class="form-label">Koordinat GPS Otomatis</label>
-                <div style="display: flex; gap: 0.5rem;">
-                  <input type="text" id="warga-report-coords" class="form-input" value="-7.0655, 109.8455" readonly style="background: var(--apple-canvas); font-size: 0.8125rem;">
-                  <button type="button" class="btn btn-secondary" style="padding: 0.5rem 0.875rem; font-size: 0.75rem;" onclick="alert('GPS Akurat Terdeteksi: -7.0655, 109.8455 (Desa Bismo)')">📍 Deteksi</button>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="form-label">Foto Bukti (Opsional)</label>
-                <input type="file" id="warga-report-photo" class="form-input" accept="image/*" style="font-size: 0.8125rem;">
-              </div>
-
-              <button type="submit" id="btn-submit-warga-report" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;">
-                Kirim Laporan Kerusakan
-              </button>
-            </form>
-          </div>
-
-          <!-- Status Laporan Inset Group -->
-          <div class="apple-cell-header">Status Penanganan Laporan Terkini</div>
-          <div class="apple-inset-group">
-            ${state.reports.slice(0, 3).map(r => `
-              <div class="apple-cell" style="align-items: flex-start;">
-                <div>
-                  <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.2rem;">
-                    <span class="pulsing-dot ${r.status === 'resolved' ? 'emerald' : r.status === 'in_progress' ? 'amber' : 'rose'}"></span>
-                    <strong style="font-size: 0.875rem;">${r.categoryLabel || r.reportType}</strong>
-                  </div>
-                  <p style="font-size: 0.8125rem; color: var(--apple-text-secondary); line-height: 1.4; margin-bottom: 0.35rem;">${r.description}</p>
-                  <span style="font-size: 0.6875rem; color: var(--apple-text-muted);">Dilaporkan ${new Date(r.createdAt || Date.now()).toLocaleDateString('id-ID')}</span>
-                </div>
-                <span style="font-size: 0.6875rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: var(--radius-full); text-transform: uppercase; white-space: nowrap; ${r.status === 'resolved' ? 'background: var(--apple-emerald-surface); color: var(--apple-emerald);' : r.status === 'in_progress' ? 'background: var(--apple-amber-subtle); color: var(--apple-amber);' : 'background: var(--apple-rose-subtle); color: var(--apple-rose);'}">
-                  ${r.status === 'resolved' ? 'Selesai' : r.status === 'in_progress' ? 'Dikerjakan' : 'Verifikasi'}
-                </span>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-
       </div>
+
+      <!-- TAB 2: MATA AIR -->
+      <div class="subtab-panel ${activeSubTab === 'mata-air' ? 'active' : ''}" id="warga-tab-mata-air">
+        <div class="apple-section-header">Telemetri Real-Time Sumber Air</div>
+        <div class="apple-inset-group" style="padding: 2rem; margin-bottom: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <div>
+              <span class="pulsing-dot emerald" style="display: inline-block; vertical-align: middle; margin-right: 6px;"></span>
+              <strong style="font-size: 1.15rem; color: var(--apple-text-primary);">${spring.name}</strong>
+            </div>
+            <span style="font-size: 0.75rem; font-weight: 700; color: var(--apple-emerald); background: var(--apple-emerald-surface); padding: 0.25rem 0.65rem; border-radius: 9999px;">
+              ${spring.sensorUptime}% Uptime
+            </span>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.25rem;">
+            <div class="apple-inset-group" style="padding: 1rem; margin-bottom: 0;">
+              <span style="font-size: 0.75rem; color: var(--apple-text-secondary); font-weight: 600; text-transform: uppercase;">Debit Aliran</span>
+              <div class="apple-stat-big" style="color: var(--apple-emerald); font-size: 1.85rem; margin: 0.25rem 0;">
+                ${spring.currentDischarge} <span style="font-size: 0.875rem; color: var(--apple-text-secondary);">L/s</span>
+              </div>
+              <span style="font-size: 0.75rem; color: var(--apple-text-muted);">Baseline ${spring.baselineDischarge} L/s</span>
+            </div>
+
+            <div class="apple-inset-group" style="padding: 1rem; margin-bottom: 0;">
+              <span style="font-size: 0.75rem; color: var(--apple-text-secondary); font-weight: 600; text-transform: uppercase;">Kapasitas Akuifer</span>
+              <div class="apple-stat-big" style="font-size: 1.85rem; margin: 0.25rem 0;">
+                ${spring.capacityPercent}<span style="font-size: 0.875rem; color: var(--apple-text-secondary);">%</span>
+              </div>
+              <span style="font-size: 0.75rem; color: var(--apple-text-muted);">Resapan lereng stabil</span>
+            </div>
+
+            <div class="apple-inset-group" style="padding: 1rem; margin-bottom: 0;">
+              <span style="font-size: 0.75rem; color: var(--apple-text-secondary); font-weight: 600; text-transform: uppercase;">Penerima Manfaat</span>
+              <div class="apple-stat-big" style="font-size: 1.85rem; margin: 0.25rem 0;">
+                ${spring.servedHouseholds} <span style="font-size: 0.875rem; color: var(--apple-text-secondary);">KK</span>
+              </div>
+              <span style="font-size: 0.75rem; color: var(--apple-text-muted);">Elevasi ${spring.elevation}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Daftar Mata Air Lain di Batang -->
+        <div class="apple-section-header">Jaringan Mata Air Terhubung</div>
+        <div class="apple-inset-group">
+          ${state.springs.map(s => `
+            <div class="apple-cell">
+              <div>
+                <strong style="font-size: 0.9375rem; display: block;">${s.name}</strong>
+                <span style="font-size: 0.75rem; color: var(--apple-text-secondary);">${s.village}, Kec. ${s.district}</span>
+              </div>
+              <div style="text-align: right;">
+                <span style="font-weight: 800; font-size: 1rem; color: var(--apple-emerald); font-variant-numeric: tabular-nums;">${s.currentDischarge} L/s</span>
+                <span style="display: block; font-size: 0.6875rem; color: var(--apple-text-muted);">${s.sensorUptime}% aktif</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- TAB 3: LAPORAN -->
+      <div class="subtab-panel ${activeSubTab === 'laporan' ? 'active' : ''}" id="warga-tab-laporan">
+        <div class="apple-section-header">Lapor Kerusakan & Pipa Bocor</div>
+        <div class="apple-inset-group" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+          <form id="form-warga-report" onsubmit="event.preventDefault();">
+            <div class="form-group" style="margin-bottom: 1rem;">
+              <label for="warga-report-category" class="form-label" style="font-size: 0.8125rem;">Kategori Masalah</label>
+              <select id="warga-report-category" class="form-select" style="font-size: 0.9375rem; border-radius: 10px;">
+                <option value="kebocoran">Kebocoran Pipa Transmisi Hulu</option>
+                <option value="kotor">Air Keruh / Kotor / Berbau</option>
+                <option value="mati">Debit Air Mati / Tidak Mengalir</option>
+                <option value="meteran">Meteran Rusak / Bocor</option>
+              </select>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1.25rem;">
+              <label for="warga-report-desc" class="form-label" style="font-size: 0.8125rem;">Deskripsi Lokasi & Kerusakan</label>
+              <textarea id="warga-report-desc" class="form-textarea" rows="3" placeholder="Contoh: Pipa transmisi retak di lereng kebun teh RT 02, air menyembur..." style="border-radius: 10px;" required></textarea>
+            </div>
+
+            <button type="submit" class="apple-button-primary" style="width: 100%; padding: 0.75rem;">
+              🚀 Kirim Laporan ke Relawan & Pengelola
+            </button>
+          </form>
+        </div>
+
+        <!-- Daftar Laporan Saya -->
+        <div class="apple-section-header">Riwayat Laporan Kerusakan</div>
+        <div class="apple-inset-group">
+          ${state.reports.map(r => `
+            <div class="apple-cell">
+              <div>
+                <strong style="font-size: 0.9375rem; display: block;">${r.categoryLabel || r.reportType}</strong>
+                <p style="font-size: 0.8125rem; color: var(--apple-text-secondary); margin: 2px 0 4px 0;">${r.description}</p>
+                <span style="font-size: 0.6875rem; color: var(--apple-text-muted);">Dilaporkan ${new Date(r.createdAt || Date.now()).toLocaleDateString('id-ID')}</span>
+              </div>
+              <span style="font-size: 0.6875rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 9999px; text-transform: uppercase; ${r.status === 'resolved' ? 'background: var(--apple-emerald-surface); color: var(--apple-emerald);' : 'background: var(--apple-amber-subtle); color: var(--apple-amber);'}">
+                ${r.status === 'resolved' ? 'Selesai' : 'Diproses'}
+              </span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <!-- TAB 4: PROFIL -->
+      <div class="subtab-panel ${activeSubTab === 'profil' ? 'active' : ''}" id="warga-tab-profil">
+        <div class="apple-section-header">Profil Pengguna & Sambungan Rumah</div>
+        <div class="apple-inset-group">
+          <div class="apple-cell">
+            <span style="color: var(--apple-text-secondary);">Nama Kepala Keluarga</span>
+            <strong>${user.name}</strong>
+          </div>
+          <div class="apple-cell">
+            <span style="color: var(--apple-text-secondary);">Nomor Kartu Keluarga (KK)</span>
+            <strong>${user.householdId}</strong>
+          </div>
+          <div class="apple-cell">
+            <span style="color: var(--apple-text-secondary);">ID Sambungan Meteran</span>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <strong>${user.linkedMeterCode}</strong>
+              <button type="button" class="apple-button-secondary" style="font-size: 0.75rem; padding: 0.2rem 0.5rem;">Tautkan Kode Meter</button>
+            </div>
+          </div>
+          <div class="apple-cell">
+            <span style="color: var(--apple-text-secondary);">Wilayah Domisili</span>
+            <strong>${user.village}</strong>
+          </div>
+          <div class="apple-cell">
+            <span style="color: var(--apple-text-secondary);">Nomor Telepon</span>
+            <strong>${user.phone || '0812-3456-7890'}</strong>
+          </div>
+        </div>
+
+        <div style="margin-top: 1.5rem; text-align: center;">
+          <a href="#login" class="apple-button-secondary" style="display: inline-block; padding: 0.65rem 1.5rem; text-decoration: none;">
+            🚪 Keluar / Ganti Akun
+          </a>
+        </div>
+      </div>
+
     </div>
   `;
 }
 
 export function attachWargaListeners(container) {
   if (!container) return;
+
+  // Desktop subtab switcher
+  container.querySelectorAll('.desktop-subtab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetSubTab = btn.dataset.targetSubtab;
+      window.dispatchEvent(new CustomEvent('belikhub:subtab-change', { detail: { subtab: targetSubTab } }));
+    });
+  });
 
   const payBtn = container.querySelector('#btn-pay-qris');
   if (payBtn) {
@@ -248,19 +278,6 @@ export function attachWargaListeners(container) {
 
       updateStore({ bills, villageFinances: fin });
       alert('Pembayaran Rp 20.000 via QRIS Berhasil! Struk resmi diterbitkan dan kas BUMDes bertambah.');
-    });
-  }
-
-  const linkBtn = container.querySelector('#btn-link-meter');
-  if (linkBtn) {
-    linkBtn.addEventListener('click', () => {
-      const input = container.querySelector('#input-link-code');
-      if (input && input.value.trim()) {
-        const currentUser = { ...getStore().currentUser, linkedMeterCode: input.value.trim().toUpperCase() };
-        updateStore({ currentUser });
-        alert(`Berhasil menautkan ID Meteran: ${currentUser.linkedMeterCode}`);
-        input.value = '';
-      }
     });
   }
 
