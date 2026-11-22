@@ -12,6 +12,7 @@ import { renderPengelolaView, attachPengelolaListeners } from './components/role
 import { renderRelawanView, attachRelawanListeners } from './components/roles/relawan.js';
 import { renderDonaturView, attachDonaturListeners } from './components/roles/donatur.js';
 import { renderAdminView, attachAdminListeners } from './components/roles/admin.js';
+import { renderLoginPage, attachLoginListeners } from './pages/login.js';
 import { subscribeStore } from './store.js';
 
 // Application Router
@@ -50,6 +51,9 @@ function router() {
   } else if (hash === 'admin') {
     appContainer.innerHTML = renderAdminView();
     attachAdminListeners(appContainer);
+  } else if (hash === 'login' || hash === 'masuk') {
+    appContainer.innerHTML = renderLoginPage();
+    attachLoginListeners(appContainer);
   } else if (hash === 'partner') {
     appContainer.innerHTML = `
       <main class="section" style="min-height: 80vh; display: flex; align-items: center;">
@@ -115,13 +119,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.addEventListener('hashchange', () => {
     const currentHash = window.location.hash.replace(/^#/, '') || 'warga';
-    if (currentHash === 'login' || currentHash === 'peran') {
-      if (roleModal) roleModal.open();
-    } else {
-      router();
-      if (nav && nav.render) {
-        nav.render(currentHash);
-      }
+    router();
+    if (nav && nav.render) {
+      nav.render(currentHash);
     }
   });
 

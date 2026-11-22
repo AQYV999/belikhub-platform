@@ -153,11 +153,11 @@ export function mountNavigation(container, onNavigate) {
       });
     }
 
-    // Role login modal trigger
+    // Role login trigger -> go to #login
     const loginBtn = container.querySelector('#btn-header-login');
     if (loginBtn) {
       loginBtn.addEventListener('click', () => {
-        window.dispatchEvent(new CustomEvent('belikhub:open-role-login'));
+        window.location.hash = 'login';
       });
     }
 

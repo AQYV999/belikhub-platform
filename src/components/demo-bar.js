@@ -67,7 +67,7 @@ export function mountDemoBar(container) {
     const switchBtn = container.querySelector('#btn-demo-switch-role');
     if (switchBtn) {
       switchBtn.addEventListener('click', () => {
-        window.dispatchEvent(new CustomEvent('belikhub:open-role-login'));
+        window.location.hash = 'login';
       });
     }
 

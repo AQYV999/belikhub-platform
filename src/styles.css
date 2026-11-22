@@ -1077,8 +1077,244 @@ p {
 }
 
 /* ==========================================================================
-   Apple-Style Role Login Modal (Inspired by Bathi Role Architecture)
+   Dedicated Login Screen (Pixel-Perfect from belikhub-app.vercel.app/login)
    ========================================================================== */
+.login-page-container {
+  min-height: calc(100vh - var(--demo-bar-height) - var(--header-height));
+  background: #0B171A; /* Deep dark teal background from app screenshot */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+}
+
+.login-wrapper {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-brand-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.login-brand-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.12);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.85rem;
+}
+
+.login-app-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.login-app-subtitle {
+  font-size: 0.875rem;
+  color: #64748B;
+  margin-top: 0.35rem;
+}
+
+.login-card {
+  width: 100%;
+  background: #112226; /* Dark teal card container */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 2rem;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.35);
+  margin-bottom: 1.5rem;
+}
+
+.login-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.login-card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.login-badge-pill {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #10B981;
+  background: rgba(16, 185, 129, 0.15);
+  padding: 0.2rem 0.65rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.login-form-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #94A3B8;
+  margin-bottom: 0.5rem;
+}
+
+.login-form-input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  background: #0B171A;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+  font-size: 0.9375rem;
+  outline: none;
+  transition: all 150ms ease;
+}
+
+.login-form-input:focus {
+  border-color: #10B981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+.login-submit-button {
+  width: 100%;
+  padding: 0.85rem;
+  border-radius: 10px;
+  background: #10B981; /* Vibrant teal from screenshot */
+  color: #064E3B;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  cursor: pointer;
+  transition: all 150ms ease;
+  margin-top: 0.5rem;
+}
+
+.login-submit-button:hover {
+  background: #34D399;
+}
+
+.login-submit-button:active {
+  transform: scale(0.98);
+}
+
+.login-register-prompt {
+  text-align: center;
+  font-size: 0.8125rem;
+  color: #64748B;
+  margin-top: 1.25rem;
+}
+
+.login-link-accent {
+  color: #10B981;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-link-accent:hover {
+  text-decoration: underline;
+}
+
+/* Amber Demo Box at the Bottom */
+.login-demo-box {
+  width: 100%;
+  background: rgba(245, 158, 11, 0.04);
+  border: 1px solid rgba(245, 158, 11, 0.35); /* Yellow/amber border */
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+.demo-box-header {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.demo-box-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.demo-box-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: #FBBF24;
+  margin: 0 0 0.25rem 0;
+}
+
+.demo-box-desc {
+  font-size: 0.8125rem;
+  color: #94A3B8;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.demo-role-quick-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.btn-demo-quick-role {
+  padding: 0.35rem 0.65rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #CBD5E1;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.btn-demo-quick-role:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+}
+
+.btn-demo-quick-role.active {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: #10B981;
+  color: #10B981;
+  font-weight: 700;
+}
+
+.demo-explore-button {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 10px;
+  background: transparent;
+  border: 1px solid rgba(16, 185, 129, 0.6);
+  color: #10B981;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 150ms ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.demo-explore-button:hover {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: #10B981;
+}
+
+.demo-explore-button:active {
+  transform: scale(0.98);
+}
+
 .role-login-modal-overlay {
   position: fixed;
   inset: 0;
