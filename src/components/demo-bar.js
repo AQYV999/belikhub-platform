@@ -7,6 +7,9 @@ export function renderDemoBar() {
     <div class="demo-bar" id="demo-bar-inner">
       <div class="demo-bar-left">
         <span class="demo-badge">Conrad Demo</span>
+        <button type="button" class="role-btn show-mobile-only" id="btn-demo-switch-role" style="background: rgba(255, 255, 255, 0.14); padding: 0.2rem 0.55rem; font-size: 0.75rem; border-radius: 6px;">
+          Ganti Peran ▾
+        </button>
         <div class="demo-roles hide-mobile">
           <a href="#warga" class="role-btn ${currentHash === 'warga' ? 'active' : ''}" data-role="warga">
             👨‍🌾 Warga
@@ -60,6 +63,13 @@ export function mountDemoBar(container) {
         window.location.hash = role;
       });
     });
+
+    const switchBtn = container.querySelector('#btn-demo-switch-role');
+    if (switchBtn) {
+      switchBtn.addEventListener('click', () => {
+        window.dispatchEvent(new CustomEvent('belikhub:open-role-login'));
+      });
+    }
 
     const resetBtn = container.querySelector('#btn-reset-demo');
     if (resetBtn) {

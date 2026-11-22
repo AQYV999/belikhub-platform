@@ -2,6 +2,7 @@ import './styles.css';
 import { mountDemoBar } from './components/demo-bar.js';
 import { mountNavigation } from './components/navigation.js';
 import { mountPlatformPortal } from './components/platform-portal.js';
+import { mountRoleLoginModal } from './components/role-login-modal.js';
 import { renderHomePage } from './pages/home.js';
 import { renderSolutionsPage } from './pages/solutions.js';
 import { renderProjectsPage } from './pages/projects.js';
@@ -108,11 +109,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   mountPlatformPortal(document.getElementById('portal-mount'));
 
+  const roleModal = mountRoleLoginModal(document.getElementById('role-login-mount'), (selectedRole) => {
+    window.location.hash = selectedRole;
+  });
+
   window.addEventListener('hashchange', () => {
-    router();
     const currentHash = window.location.hash.replace(/^#/, '') || 'warga';
-    if (nav && nav.render) {
-      nav.render(currentHash);
+    if (currentHash === 'login' || currentHash === 'peran') {
+      if (roleModal) roleModal.open();
+    } else {
+      router();
+      if (nav && nav.render) {
+        nav.render(currentHash);
+      }
     }
   });
 

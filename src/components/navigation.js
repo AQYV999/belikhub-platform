@@ -1,12 +1,20 @@
 export function renderNavigation(currentRoute = 'warga') {
   const isPortal = ['warga', 'pengelola', 'relawan', 'donatur', 'admin'].includes(currentRoute);
 
+  const roleLabels = {
+    warga: '👨‍🌾 Warga',
+    pengelola: '👷‍♂️ Pengelola',
+    relawan: '🤝 Relawan',
+    donatur: '💚 Donatur',
+    admin: '👑 Admin'
+  };
+
   return `
-    <!-- Top Header: Clean & Spacious -->
-    <header class="main-header" style="background: rgba(255, 255, 255, 0.92); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--apple-hairline); position: sticky; top: 0; z-index: 1000;">
+    <!-- Top Header: Clean, Sophisticated, Spacious -->
+    <header class="main-header" style="background: rgba(255, 255, 255, 0.94); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--apple-hairline); position: sticky; top: 0; z-index: 1000;">
       <div class="container nav-container" style="display: flex; justify-content: space-between; align-items: center; padding: 0.65rem 1.25rem; max-width: 1100px;">
         
-        <!-- App Logo & Title -->
+        <!-- App Logo & Branding -->
         <a href="#warga" class="nav-logo" data-route="warga" style="display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--apple-text-primary);">
           <div style="width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #10B981 0%, #059669 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(5,150,105,0.25);">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -15,7 +23,7 @@ export function renderNavigation(currentRoute = 'warga') {
           </div>
           <div>
             <span style="font-weight: 800; font-size: 1.15rem; letter-spacing: -0.03em; color: var(--apple-text-primary); display: block; line-height: 1.1;">BelikHub</span>
-            <span class="hide-mobile" style="font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-emerald);">Dashboard Edition</span>
+            <span class="hide-mobile" style="font-size: 0.6875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--apple-emerald);">Health App Edition</span>
           </div>
         </a>
 
@@ -40,8 +48,15 @@ export function renderNavigation(currentRoute = 'warga') {
           </div>
         </nav>
 
-        <!-- Right Side: Secondary Info & Toggle Menu -->
+        <!-- Right Side: Role Login Switcher & Documentation Dropdown -->
         <div style="display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0;">
+          
+          <!-- Masuk Peran / Switch Role Trigger Button -->
+          <button type="button" class="apple-button-primary btn-open-role-login" id="btn-header-login" style="padding: 0.4rem 0.85rem; font-size: 0.8125rem; border-radius: 10px; display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+            <span>${roleLabels[currentRoute] || 'Masuk Peran'}</span>
+            <span style="opacity: 0.7; font-size: 0.75rem;">▾</span>
+          </button>
+
           <div class="nav-item-dropdown">
             <button type="button" class="apple-button-secondary dropdown-toggle-btn" id="btn-doc-dropdown" style="padding: 0.4rem 0.75rem; font-size: 0.8125rem; border-radius: 10px; display: flex; align-items: center; gap: 0.35rem; cursor: pointer;">
               <span>Dokumentasi</span> ▾
@@ -66,7 +81,7 @@ export function renderNavigation(currentRoute = 'warga') {
             </div>
           </div>
 
-          <a href="#partner" class="apple-button-primary hide-mobile" data-route="partner" style="padding: 0.4rem 0.85rem; font-size: 0.8125rem; text-decoration: none; border-radius: 10px; white-space: nowrap;">
+          <a href="#partner" class="apple-button-secondary hide-mobile" data-route="partner" style="padding: 0.4rem 0.85rem; font-size: 0.8125rem; text-decoration: none; border-radius: 10px; white-space: nowrap;">
             Partner with us
           </a>
         </div>
@@ -77,10 +92,11 @@ export function renderNavigation(currentRoute = 'warga') {
       <div style="display: none;" aria-hidden="true">
         <a href="#home">Home</a>
         <a href="#solutions">Solutions</a>
-        <a href="#solutions-sense">BelikSense</a>
+        <a href="#solutions-sense">Belik Sense</a>
         <a href="#solutions-conservation">Conservation Services</a>
         <a href="#projects">Projects</a>
         <a href="#about">About</a>
+        <a href="#partner">Partner with us</a>
       </div>
     </header>
 
@@ -134,6 +150,14 @@ export function mountNavigation(container, onNavigate) {
         if (!container.contains(e.target)) {
           dropdownMenu.classList.remove('show');
         }
+      });
+    }
+
+    // Role login modal trigger
+    const loginBtn = container.querySelector('#btn-header-login');
+    if (loginBtn) {
+      loginBtn.addEventListener('click', () => {
+        window.dispatchEvent(new CustomEvent('belikhub:open-role-login'));
       });
     }
 
